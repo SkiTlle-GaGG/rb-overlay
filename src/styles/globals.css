@@ -10,6 +10,18 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  /* Custom Red Bull colors */
+    --color-light-gray: #E7E7E7;
+    --color-teal: #1F6D6D;
+    --color-slate: #475966;
+    --color-dark-red: #5B0000;
+    /* Team-specific colors */
+    --color-noxus-red: #8B0000;
+    --color-noxus-dark-red: #5B0000;
+    --color-noxus-light-red: #DC143C;
+    --color-demacia-gray: #708090;
+    --color-demacia-dark-gray: #2F4F4F;
+    --color-demacia-light-gray: #A9A9A9;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,4 +35,33 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Team Card Styles */
+.noxus-card {
+  background: linear-gradient(135deg, #8B0000 0%, #5B0000 100%);
+  box-shadow: 0 25px 50px -12px rgba(139, 0, 0, 0.5);
+}
+
+.demacia-card {
+  background: linear-gradient(135deg, #708090 0%, #2F4F4F 100%);
+  box-shadow: 0 25px 50px -12px rgba(112, 128, 144, 0.5);
+}
+
+/* Custom scrollbar for better aesthetics */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
