@@ -1,8 +1,39 @@
 @import "tailwindcss";
 
+/* Red Bull Font Faces */
+@font-face {
+  font-family: 'FuturaforRedBull-Book';
+  src: url('./fonts/FuturaforRedBull-Book.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'FuturaforRedBull-CondBold';
+  src: url('./fonts/FuturaforRedBull-CondBold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Red Bull Brand Colors */
+  --redbull-red: #DC143C;
+  --redbull-dark-red: #5B0000;
+  --redbull-black: #000000;
+  --redbull-white: #FFFFFF;
+  --redbull-yellow: #FFD700;
+  --redbull-blue: #003366;
+  --redbull-silver: #C0C0C0;
+
+  /* Background and Foreground */
+  --background: #000000;
+  --foreground: #FFFFFF;
+
+  /* Red Bull Font Variables */
+  --font-redbull-book: 'FuturaforRedBull-Book', Arial, Helvetica, sans-serif;
+  --font-redbull-cond-bold: 'FuturaforRedBull-CondBold', Arial, Helvetica, sans-serif;
 }
 
 @theme inline {
@@ -10,31 +41,158 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  /* Custom Red Bull colors */
-    --color-light-gray: #E7E7E7;
-    --color-teal: #1F6D6D;
-    --color-slate: #475966;
-    --color-dark-red: #5B0000;
-    /* Team-specific colors */
-    --color-noxus-red: #8B0000;
-    --color-noxus-dark-red: #5B0000;
-    --color-noxus-light-red: #DC143C;
-    --color-demacia-gray: #708090;
-    --color-demacia-dark-gray: #2F4F4F;
-    --color-demacia-light-gray: #A9A9A9;
+
+  /* Red Bull Font Families */
+  --font-redbull-book: var(--font-redbull-book);
+  --font-redbull-cond-bold: var(--font-redbull-cond-bold);
+
+  /* Red Bull Brand Colors */
+  --color-redbull-red: var(--redbull-red);
+  --color-redbull-dark-red: var(--redbull-dark-red);
+  --color-redbull-black: var(--redbull-black);
+  --color-redbull-white: var(--redbull-white);
+  --color-redbull-yellow: var(--redbull-yellow);
+  --color-redbull-blue: var(--redbull-blue);
+  --color-redbull-silver: var(--redbull-silver);
+
+  /* Legacy colors for compatibility */
+  --color-light-gray: #E7E7E7;
+  --color-teal: #1F6D6D;
+  --color-slate: #475966;
+  --color-dark-red: var(--redbull-dark-red);
+
+  /* Team-specific colors */
+  --color-noxus-red: #8B0000;
+  --color-noxus-dark-red: #5B0000;
+  --color-noxus-light-red: #DC143C;
+  --color-demacia-gray: #708090;
+  --color-demacia-dark-gray: #2F4F4F;
+  --color-demacia-light-gray: #A9A9A9;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #000000;
+    --foreground: #FFFFFF;
   }
 }
 
 body {
-  background: var(--background);
+  background: transparent;
+  background-attachment: fixed;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-redbull-book);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Red Bull Energy Background Effects */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 20% 80%, rgba(220, 20, 60, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(220, 20, 60, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+  animation: energyPulse 8s ease-in-out infinite;
+}
+
+@keyframes energyPulse {
+
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Red Bull Component Styles */
+.redbull-card {
+  background: linear-gradient(135deg, rgba(220, 20, 60, 0.1) 0%, rgba(91, 0, 0, 0.2) 100%);
+  border: 2px solid rgba(220, 20, 60, 0.3);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.redbull-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.redbull-card:hover::before {
+  left: 100%;
+}
+
+.redbull-card:hover {
+  border-color: var(--redbull-red);
+  box-shadow: 0 0 30px rgba(220, 20, 60, 0.4);
+  transform: translateY(-5px);
+}
+
+.redbull-button {
+  background: linear-gradient(135deg, var(--redbull-red) 0%, var(--redbull-dark-red) 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-family: var(--font-redbull-cond-bold);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.redbull-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.3s;
+}
+
+.redbull-button:hover::before {
+  left: 100%;
+}
+
+.redbull-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(220, 20, 60, 0.4);
+}
+
+.redbull-text-gradient {
+  background: linear-gradient(135deg, var(--redbull-red) 0%, var(--redbull-yellow) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: var(--font-redbull-cond-bold);
+}
+
+.redbull-glow {
+  text-shadow: 0 0 10px var(--redbull-red), 0 0 20px var(--redbull-red), 0 0 30px var(--redbull-red);
 }
 
 /* Team Card Styles */
@@ -48,20 +206,81 @@ body {
   box-shadow: 0 25px 50px -12px rgba(112, 128, 144, 0.5);
 }
 
-/* Custom scrollbar for better aesthetics */
+/* Red Bull Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
+  background: linear-gradient(135deg, var(--redbull-red) 0%, var(--redbull-dark-red) 100%);
+  border-radius: 6px;
+  border: 2px solid rgba(0, 0, 0, 0.8);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: linear-gradient(135deg, var(--redbull-yellow) 0%, var(--redbull-red) 100%);
+  box-shadow: 0 0 10px rgba(220, 20, 60, 0.5);
+}
+
+/* Red Bull Animations */
+@keyframes redbullPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    /* box-shadow: 0 0 0 0 rgba(220, 20, 60, 0.7); */
+  }
+
+  50% {
+    transform: scale(1.05);
+    /* box-shadow: 0 0 0 10px rgba(220, 20, 60, 0); */
+  }
+}
+
+@keyframes redbullSlide {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.redbull-pulse {
+  animation: redbullPulse 2s infinite;
+}
+
+.redbull-slide {
+  animation: redbullSlide 3s ease-in-out infinite;
+}
+
+/* Red Bull Typography Enhancements */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-redbull-cond-bold);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.redbull-title {
+  font-family: var(--font-redbull-cond-bold);
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  background: linear-gradient(135deg, var(--redbull-red) 0%, var(--redbull-yellow) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(220, 20, 60, 0.5);
+  animation: redbullPulse 3s ease-in-out infinite;
 }

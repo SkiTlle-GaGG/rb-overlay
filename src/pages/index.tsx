@@ -1,82 +1,49 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
-import InfluencerStatsCard from "@/components/slides/InfluencerStatsCard";
-import NoxusCard from "@/components/NoxusCard";
-import DemaciaCard from "@/components/DemaciaCard";
-
-// Sample data for demonstration
-const noxusPlayers = [
-  {
-    summoner_name: "ARIANA GRANDE",
-    stats: 1322113123,
-    placement_in_team: 1,
-    captain: true
-  },
-  {
-    summoner_name: "PEDRO PASCAL",
-    stats: 3457832,
-    placement_in_team: 2,
-    captain: false
-  },
-  {
-    summoner_name: "FREDDY KRUGER",
-    stats: 1242,
-    placement_in_team: 3,
-    captain: false
-  }
-];
-
-const demaciaPlayers = [
-  {
-    summoner_name: "ARIANA GRANDE",
-    stats: 1322113123,
-    placement_in_team: 1,
-    captain: true
-  },
-  {
-    summoner_name: "PEDRO PASCAL",
-    stats: 3457832,
-    placement_in_team: 2,
-    captain: false
-  },
-  {
-    summoner_name: "FREDDY KRUGER",
-    stats: 1242,
-    placement_in_team: 3,
-    captain: false
-  }
-];
+import Dashboard from "@/components/layout/Dashboard";
+import Card from "@/components/Card";
+import ChallengeStats from "@/components/ChallengeStats";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-900 p-8">
-      <div className="container mx-auto">
-        <h1 className="text-4xl font-bold text-white text-center mb-8">
-          Red Bull Fractured Alliance - Team Overlays
-        </h1>
-
-        <div className="flex flex-col lg:flex-row gap-8 justify-center items-start">
-          {/* Noxus Team Card */}
-          <div className="flex flex-col items-center">
-            <h2 className="text-2xl font-bold text-red-400 mb-4">NOXUS TEAM</h2>
-            <NoxusCard teamName="TEAM NOWAY" players={noxusPlayers} />
-          </div>
-
-          {/* Demacia Team Card */}
-          <div className="flex flex-col items-center">
-            <h2 className="text-2xl font-bold text-gray-400 mb-4">DEMACIA TEAM</h2>
-            <DemaciaCard teamName="TEAM KARNI" players={demaciaPlayers} />
-          </div>
+    <Dashboard>
+      <div className="space-y-8">
+        {/* Hero Section */}
+        <div className="text-center mb-12">
+          <h1 className="redbull-title text-6xl mb-4">RED BULL GAMING</h1>
+          <p className="text-xl text-redbull-silver font-redbull-book tracking-wider max-w-2xl mx-auto">
+            Welcome to the ultimate gaming experience where energy meets
+            competition
+          </p>
         </div>
 
-        {/* Original Influencer Stats Card for reference */}
-        <div className="mt-12 flex justify-center">
-          <div className="flex flex-col items-center">
-            <h2 className="text-2xl font-bold text-white mb-4">Original Design</h2>
-            <InfluencerStatsCard />
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+          {/* <Card title="NOXUS TEAM" subtitle="Power & Domination">
+            <ChallengeStats />
+          </Card>
+
+          <Card title="DEMACIA TEAM" subtitle="Honor & Justice">
+            <ChallengeStats />
+          </Card>
+
+          <Card title="IONIA TEAM" subtitle="Balance & Harmony">
+            <ChallengeStats />
+          </Card> */}
+        </div>
+
+        {/* Call to Action */}
+        <div className="text-center mt-12">
+          <div className="redbull-card p-8 max-w-md mx-auto">
+            <h2 className="redbull-text-gradient text-2xl mb-4 font-redbull-cond-bold">
+              JOIN THE COMPETITION
+            </h2>
+            <p className="text-redbull-silver mb-6 font-redbull-book">
+              Ready to prove your skills? Enter the arena and show what you're
+              made of.
+            </p>
+            <button className="redbull-button">Start Gaming Now</button>
           </div>
         </div>
       </div>
-    </div>
+    </Dashboard>
   );
 }
