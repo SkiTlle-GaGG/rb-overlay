@@ -1,11 +1,12 @@
 import Link from "next/link";
+import Navbar from "./Navbar";
 
 export default function Dashboard({ children }: { children: React.ReactNode }) {
   return (
     <div className="container-lg mx-auto relative z-10">
       {/* Enhanced Navigation */}
-
-      <nav className="bg-white border-gray-200 dark:bg-gray-900">
+      <Navbar />
+      {/* <nav className="bg-white border-gray-200 dark:bg-gray-900">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <Link
             href="/"
@@ -85,7 +86,7 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
             </ul>
           </div>
         </div>
-      </nav>
+      </nav> */}
 
       {/* Main Content Area */}
       <div className="mt-12 flex justify-center">
