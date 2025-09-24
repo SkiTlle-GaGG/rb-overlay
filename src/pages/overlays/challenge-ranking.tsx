@@ -11,7 +11,7 @@ function challengeRanking() {
     { name: "XK Damage", points: 674573545234, team: TeamEnum.DEMACIA },
   ];
   return (
-    <div>
+    <div className="overlay-container">
       <ChallengesRankingCard stats={stats} />
     </div>
   );

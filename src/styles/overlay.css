@@ -1,0 +1,22 @@
+/* Overlay-specific styles for OBS streaming */
+html, body {
+  background: transparent !important;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 1920px;
+  height: 1080px;
+}
+
+/* Ensure overlay pages have transparent backgrounds */
+.overlay-container {
+  width: 1920px;
+  height: 1080px;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+/* Remove any default margins/padding that might interfere */
+* {
+  box-sizing: border-box;
+}

@@ -284,3 +284,20 @@ h6 {
   text-shadow: 0 0 30px rgba(220, 20, 60, 0.5);
   animation: redbullPulse 3s ease-in-out infinite;
 }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  text-decoration: none;
+  list-style: none;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  cursor: pointer;
+}
