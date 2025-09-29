@@ -1,20 +1,54 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import CardBg from "@/assets/img/card_bg_new.png";
 import Image from "next/image";
 import RbLogo from "@/assets/img/rb_logo.png";
 import styles from "./Card.module.css";
 
+export enum TeamColor {
+  DEMACIA = "demacia",
+  NOXUS = "noxus",
+  IONIA = "ionia",
+}
+
 export interface CardProps {
   children: React.ReactNode;
   title: string;
   subtitle: string;
+  color?: TeamColor;
 }
 
-export default function Card({ children, title, subtitle }: CardProps) {
+export default function Card({
+  children,
+  title,
+  subtitle,
+  color = TeamColor.NOXUS,
+}: CardProps) {
+  const [textColor, setTextColor] = useState("white");
+
+  useEffect(() => {
+    if (color) {
+      switch (color) {
+        case TeamColor.DEMACIA:
+          setTextColor("var(--color-demacia)");
+          break;
+        case TeamColor.NOXUS:
+          setTextColor("var(--color-noxus)");
+          break;
+        case TeamColor.IONIA:
+          setTextColor("var(--color-ionia)");
+          break;
+      }
+    }
+  }, [color]);
+
   return (
     <div
       className={styles.overlayCard}
-      style={{ backgroundImage: `url(${CardBg.src})` }}
+      style={{
+        backgroundImage: `url(${CardBg.src})`,
+      }}
     >
       {/* Header */}
       <div className={styles.cardHeader}>
@@ -28,7 +62,7 @@ export default function Card({ children, title, subtitle }: CardProps) {
                 fontSize="22"
                 fontWeight="bold"
                 fill="white"
-                stroke="#5B0000"
+                stroke={textColor}
                 strokeWidth="3"
                 paintOrder="stroke"
                 textAnchor="middle"
@@ -38,7 +72,9 @@ export default function Card({ children, title, subtitle }: CardProps) {
                 {title}
               </text>
             </svg>
-            <p className={styles.cardSubtitle}>{subtitle}</p>
+            <p className={styles.cardSubtitle} style={{ color: textColor }}>
+              {subtitle}
+            </p>
           </div>
         </div>
       </div>

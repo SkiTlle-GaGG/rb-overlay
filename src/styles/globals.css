@@ -34,6 +34,12 @@
 }
 
 :root {
+
+  /* Team Colors */
+  --color-demacia: #708090;
+  --color-noxus: #8B0000;
+  --color-ionia: #1F6D6D;
+
   /* Red Bull Brand Colors */
   --redbull-red: #DC143C;
   --redbull-dark-red: #5B0000;

@@ -86,7 +86,7 @@ export default function Overlays() {
                   </span>
                 </div>
                 <Link href="/overlays/challenge-ranking">
-                  <Button className="w-full mt-4 bg-gradient-to-r from-redbull-red to-redbull-dark-red hover:from-redbull-red/90 hover:to-redbull-dark-red/90 text-white font-redbull-cond-bold tracking-wider">
+                  <Button className="w-full cursor-pointer mt-4 bg-gradient-to-r from-redbull-red to-redbull-dark-red hover:from-redbull-red/90 hover:to-redbull-dark-red/90 text-white font-redbull-cond-bold tracking-wider">
                     View Overlay
                   </Button>
                 </Link>
@@ -97,12 +97,12 @@ export default function Overlays() {
           <Card className="bg-gradient-to-br border-gaming-slate/30 hover:border-redbull-red/50 transition-all duration-300 group">
             <CardHeader>
               <div className="flex items-center justify-between">
-                <Monitor className="h-8 w-8 text-gaming-light-gray/70" />
+                <Monitor className="h-8 w-8 text-redbull-red" />
                 <div className="flex gap-2">
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-8 w-8 p-0 border-gaming-slate/30 text-gaming-light-gray/70"
+                    className="h-8 w-8 p-0 border-gaming-slate/30 text-gaming-light-gray hover:text-white hover:border-redbull-red/50"
                     disabled
                   >
                     <Eye className="h-4 w-4" />
@@ -110,18 +110,18 @@ export default function Overlays() {
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-8 w-8 p-0 border-gaming-slate/30 text-gaming-light-gray/70"
+                    className="h-8 w-8 p-0 border-gaming-slate/30 text-gaming-light-gray hover:text-white hover:border-redbull-red/50"
                     disabled
                   >
                     <Download className="h-4 w-4" />
                   </Button>
                 </div>
               </div>
-              <CardTitle className="text-gaming-light-gray font-redbull-cond-bold">
-                Team Stats
+              <CardTitle className="text-white font-redbull-cond-bold">
+                Team Player Ranking
               </CardTitle>
-              <CardDescription className="text-gaming-light-gray/60 font-redbull-book">
-                Coming soon - Real-time team performance metrics
+              <CardDescription className="text-gaming-light-gray font-redbull-book">
+                Team players ranking for ionia, demacia and noxus
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -130,16 +130,31 @@ export default function Overlays() {
                   <span className="text-gaming-light-gray font-redbull-book">
                     Status:
                   </span>
-                  <span className="text-gaming-light-gray/90 font-redbull-cond-bold">
-                    Coming Soon
+                  <span className="text-redbull-red font-redbull-cond-bold">
+                    Active
                   </span>
                 </div>
-                <Button
-                  className="w-full mt-4 bg-gaming-slate/20 text-gaming-light-gray font-redbull-cond-bold tracking-wider"
-                  disabled
-                >
-                  Coming Soon
-                </Button>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-gaming-light-gray font-redbull-book">
+                    Resolution:
+                  </span>
+                  <span className="text-white font-redbull-book">
+                    1920x1080
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-gaming-light-gray font-redbull-book">
+                    Last Updated:
+                  </span>
+                  <span className="text-white font-redbull-book">
+                    2 min ago
+                  </span>
+                </div>
+                <Link href="/overlays/team-players-ranking">
+                  <Button className="w-full cursor-pointer mt-4 bg-gradient-to-r from-redbull-red to-redbull-dark-red hover:from-redbull-red/90 hover:to-redbull-dark-red/90 text-white font-redbull-cond-bold tracking-wider">
+                    View Overlay
+                  </Button>
+                </Link>
               </div>
             </CardContent>
           </Card>
