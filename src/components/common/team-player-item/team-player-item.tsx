@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 
-interface TeamPlayerItemProps {
+export interface TeamPlayerItemProps {
 	rank: number
 	iconUrl: string
 	summonerName: string
@@ -9,7 +9,7 @@ interface TeamPlayerItemProps {
 	frameBackground: string
 }
 
-export function TeamPlayerItem({
+export function PlayerItem({
 	rank,
 	iconUrl,
 	summonerName,

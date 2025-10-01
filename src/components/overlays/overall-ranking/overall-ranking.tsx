@@ -1,10 +1,10 @@
-import Card from '@/components/Card'
+import { OverlayCard } from '@/components/common/overlay-card'
 import React from 'react'
 import NoxusFrame from '@/assets/img/team/noxus/noxus_frame.png'
 import DemaciaFrame from '@/assets/img/team/Demacia/demacia_frame.png'
 import IoniaFrame from '@/assets/img/team/ionia/ionia_frame.png'
-import styles from './OverallRanking.module.css'
-import { TeamPlayerItem } from '../components/Item'
+import styles from './overall-ranking.module.css'
+import { TeamPlayerItem } from '@/components/common/team-player-item'
 
 function OverallRanking() {
 
@@ -14,7 +14,7 @@ function OverallRanking() {
 	}
 
 	return (
-		<Card title="GESAMTWERTUNG" subtitle="TEAM RANKING">
+		<OverlayCard title="GESAMTWERTUNG" subtitle="TEAM RANKING">
 			{/* List */}
 			<div className={styles.list}>
 				{/* Item */}
@@ -29,7 +29,7 @@ function OverallRanking() {
 					/>
 				))}
 			</div>
-		</Card>
+		</OverlayCard>
 	)
 }
 

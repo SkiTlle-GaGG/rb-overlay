@@ -1,9 +1,10 @@
-import Card, { TeamColor } from '@/components/Card'
+import { OverlayCard, TeamColor } from '@/components/common/overlay-card'
 import React from 'react'
 import DamaciaFrame from '@/assets/img/team/Demacia/demacia_frame.png'
 import NoxusFrame from '@/assets/img/team/noxus/noxus_frame.png'
 import IoniaFrame from '@/assets/img/team/ionia/ionia_frame.png'
-import { TeamPlayerItem } from '../components/Item'
+import { TeamPlayerItem } from '@/components/common/team-player-item'
+import { PlayerItem } from '@/components/common/team-player-item/team-player-item'
 
 function TeamPlayersRanking({ teamColor }: { teamColor: TeamColor }) {
   const frame =
@@ -13,14 +14,14 @@ function TeamPlayersRanking({ teamColor }: { teamColor: TeamColor }) {
         ? NoxusFrame.src
         : IoniaFrame.src
 
-  return (
-    <Card title="TEAM OBSESSS" subtitle="TOP SPIELER" color={teamColor}>
+	return (
+		<OverlayCard title="TEAM OBSESSS" subtitle="TOP SPIELER" color={teamColor}>
       {/* List */}
       <div
         className={'flex flex-col gap-4 font-redbull-book text-[12px]'}
       >
         {[1, 2, 3].map((number) => (
-          <TeamPlayerItem
+          <PlayerItem
             key={number}
             rank={number}
             iconUrl="https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/6725.png"
@@ -30,8 +31,8 @@ function TeamPlayersRanking({ teamColor }: { teamColor: TeamColor }) {
           />
         ))}
       </div>
-    </Card>
-  )
+		</OverlayCard>
+	)
 }
 
 export default TeamPlayersRanking;

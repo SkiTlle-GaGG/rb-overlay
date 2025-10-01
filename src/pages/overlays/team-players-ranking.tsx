@@ -1,6 +1,6 @@
 import React from 'react'
-import TeamPlayersRanking from '@/components/slides/TeamPlayersRanking/TeamPlayersRanking'
-import { TeamColor } from '@/components/Card'
+import { TeamPlayersRanking } from '@/components/overlays/team-players-ranking'
+import { TeamColor } from '@/components/common/overlay-card'
 
 function TeamPlayersRankingPage() {
   return (

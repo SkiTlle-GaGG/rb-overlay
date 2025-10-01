@@ -1,5 +1,5 @@
 import React from 'react'
-import OverallRanking from '@/components/slides/OverallRanking/OverallRanking'
+import { OverallRanking } from '@/components/overlays/overall-ranking'
 
 function OverallRankingPage() {
   return (
