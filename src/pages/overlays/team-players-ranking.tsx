@@ -5,7 +5,7 @@ import { TeamColor } from '@/components/common/overlay-card'
 function TeamPlayersRankingPage() {
   return (
     <div>
-      <TeamPlayersRanking teamColor={TeamColor.NOXUS} />
+      <TeamPlayersRanking teamColor={TeamColor.DEMACIA} />
     </div>
   )
 }
