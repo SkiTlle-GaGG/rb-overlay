@@ -17,7 +17,7 @@
 .cardTitleContainer {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 10px;
   width: 100%;
   position: relative;
 }
@@ -27,13 +27,13 @@
   font-size: 14px;
   font-weight: bold;
   display: flex;
-  align-items: center;
+  align-items: left;
   flex-direction: column;
 }
 
 .cardTitle {
   width: 100%;
-  height: 28px;
+  height: 30px;
 }
 
 .cardTitleText {
@@ -61,10 +61,11 @@
 
 .cardLogoContainer {
   display: block;
-  position: absolute;
+  /* position: absolute;
   bottom: -70px;
   left: 50%;
-  transform: translateX(-50%);
+    */
+      /* transform: translateX(-50%); */
   z-index: 10;
 }
 

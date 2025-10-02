@@ -10,7 +10,7 @@
                     "summoner_name": "SkiTlletron#EUW",
                     "team_id": "NOXUS_TEAM",
                     "team_name": "SkiTlles",
-                    "placement_in_team": 2,
+                    "placement": 1,
                     "objectives": {
                         "WIN_A_GAME": {
                             "stats": 100,
@@ -38,7 +38,7 @@
                     "summoner_name": "GA Stunner#TRYH",
                     "team_id": "IONIA_TEAM",
                     "team_name": "GA Stunner",
-                    "placement_in_team": 1,
+                    "placement": 2,
                     "objectives": {
                         "WIN_A_GAME": {
                             "stats": 100,
@@ -66,7 +66,7 @@
                     "summoner_name": "GA Stunner#REAPER_TEAM",
                     "team_id": "REAPER_TEAM",
                     "team_name": "GA Stunner",
-                    "placement_in_team": 1,
+                    "placement": 3,
                     "objectives": {
                         "WIN_A_GAME": {
                             "stats": 100,
@@ -258,6 +258,7 @@
                 }
             ]
         },
+
         {
             "event_name": "Week 2 11.10.25 - 17.10.25",
             "start_date": "11.10.25",

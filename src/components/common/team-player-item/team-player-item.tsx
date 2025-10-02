@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 
-export interface TeamPlayerItemProps {
+export interface PlayerItemProps {
 	rank: number
 	iconUrl: string
 	summonerName: string
@@ -15,7 +15,7 @@ export function PlayerItem({
 	summonerName,
 	points,
 	frameBackground,
-}: TeamPlayerItemProps) {
+}: PlayerItemProps) {
 	return (
 		<div
 			className={'flex align-center justify-between p-2 rounded-lg text-white'}

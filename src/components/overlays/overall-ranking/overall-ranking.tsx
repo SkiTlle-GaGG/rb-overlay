@@ -4,7 +4,7 @@ import NoxusFrame from '@/assets/img/team/noxus/noxus_frame.png'
 import DemaciaFrame from '@/assets/img/team/Demacia/demacia_frame.png'
 import IoniaFrame from '@/assets/img/team/ionia/ionia_frame.png'
 import styles from './overall-ranking.module.css'
-import { TeamPlayerItem } from '@/components/common/team-player-item'
+import { PlayerItem } from '@/components/common/team-player-item/team-player-item'
 
 function OverallRanking() {
 
@@ -19,7 +19,7 @@ function OverallRanking() {
 			<div className={styles.list}>
 				{/* Item */}
 				{[1, 2, 3].map((number) => (
-					<TeamPlayerItem
+					<PlayerItem
 						key={number}
 						rank={number}
 						iconUrl="https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/6725.png"
