@@ -1,5 +1,5 @@
 .overlayCard {
-  padding: 16px 35px 16px 25px;
+  /* padding: 12px 35px 16px 10px; */
   width: 360px;
   height: 342px;
   position: relative;
@@ -9,11 +9,21 @@
   z-index: 0;
 }
 
+.cardContent {
+  padding: 12px 35px 16px 10px;
+}
 .cardHeader {
   position: relative;
   z-index: 10;
 }
 
+.cardBgGradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 .cardTitleContainer {
   display: flex;
   align-items: center;

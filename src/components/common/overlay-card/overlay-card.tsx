@@ -50,50 +50,57 @@ export default function OverlayCard({
 			// 	backgroundImage: `url(${CardBg.src})`,
 			// }}
 		>
+			<div
+				className={styles.cardBgGradient}
+				style={{
+					background: 'radial-gradient(ellipse 80% 80% at 20% 20%, #11131A 48%, #21253300 100%)',
+				}}
+			/>
 
+			<div className={styles.cardContent}>
+				{/* Header */}
+				<div className={styles.cardHeader}>
 
-			{/* Header */}
-			<div className={styles.cardHeader}>
-				<div className={styles.cardTitleContainer}>
-					<div className={styles.cardLogoContainer}>
-						<Image
-							src={RbLogo.src}
-							alt="Red Bull Logo"
-							className={styles.cardLogo}
-							width={100}
-							height={100}
-						/>
-					</div>
+					<div className={styles.cardTitleContainer}>
 
-					<div className={styles.cardTitleWrapper}>
-						<svg className={styles.cardTitle} height={30} width="100%">
-							<text
-								x="2px"
-								y="22px"
-								fontFamily="FuturaforRedBull-CondBold"
-								fontSize="22"
-								fontWeight="bold"
-								fill="white"
-								stroke={textColor}
-								strokeWidth="3"
-								paintOrder="stroke"
-								textAnchor="start"
-								dominantBaseline="middle"
-								letterSpacing="2"
-							>
-								{title}
-							</text>
-						</svg>
-						<p className={styles.cardSubtitle} style={{ color: textColor, marginLeft: '2px' }}>
-							{subtitle}
-						</p>
+						<div className={styles.cardLogoContainer}>
+							<Image
+								src={RbLogo.src}
+								alt="Red Bull Logo"
+								className={styles.cardLogo}
+								width={100}
+								height={100}
+							/>
+						</div>
+
+						<div className={styles.cardTitleWrapper}>
+							<svg className={styles.cardTitle} height={30} width="100%">
+								<text
+									x="2px"
+									y="22px"
+									fontFamily="FuturaforRedBull-CondBold"
+									fontSize="22"
+									fontWeight="bold"
+									fill="white"
+									stroke={textColor}
+									strokeWidth="3"
+									paintOrder="stroke"
+									textAnchor="start"
+									dominantBaseline="middle"
+									letterSpacing="2"
+								>
+									{title}
+								</text>
+							</svg>
+							<p className={styles.cardSubtitle} style={{ color: textColor, marginLeft: '2px' }}>
+								{subtitle}
+							</p>
+						</div>
 					</div>
 				</div>
+
+				<div className={styles.cardContent}>{children}</div>
 			</div>
-
-			<div className={styles.cardContent}>{children}</div>
-
-
 		</div>
 	)
 }
