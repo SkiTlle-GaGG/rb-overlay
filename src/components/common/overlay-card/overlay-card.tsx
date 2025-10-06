@@ -82,7 +82,7 @@ export default function OverlayCard({
 									fontSize="22"
 									fontWeight="bold"
 									fill="white"
-									stroke={textColor}
+									stroke={"#383C42"}
 									strokeWidth="3"
 									paintOrder="stroke"
 									textAnchor="start"
@@ -92,9 +92,28 @@ export default function OverlayCard({
 									{title}
 								</text>
 							</svg>
-							<p className={styles.cardSubtitle} style={{ color: textColor, marginLeft: '2px' }}>
+							<svg className={styles.cardTitle} height={30} width="100%">
+								<text
+									x="2px"
+									y="18px"
+									fontFamily="FuturaforRedBull-CondBold"
+									fontSize="16"
+									fontWeight="bold"
+									fill="white"
+									stroke={"#383C42"}
+									strokeWidth="3"
+									paintOrder="stroke"
+									textAnchor="start"
+									dominantBaseline="middle"
+									letterSpacing="2"
+									style={{ textTransform: 'uppercase' }}
+								>
+									{subtitle}
+								</text>
+							</svg>
+							{/* <p className={styles.cardSubtitle} style={{ color: "white", marginLeft: '2px' }}>
 								{subtitle}
-							</p>
+							</p> */}
 						</div>
 					</div>
 				</div>

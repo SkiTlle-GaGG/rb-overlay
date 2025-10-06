@@ -20,16 +20,19 @@ function TeamPlayersRanking({ teamColor }: { teamColor: TeamColor }) {
       <div
         className={'flex flex-col gap-4 font-redbull-book text-[12px]'}
       >
-        {[1, 2, 3].map((number) => (
-          <PlayerItem
-            key={number}
-            rank={number}
-            iconUrl="https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/6725.png"
-            summonerName="ARIANA GRANDE"
-            points="1322113123"
-            frameBackground={frame}
-          />
-        ))}
+        {[1, 2, 3].map((number) => {
+          return (
+            <PlayerItem
+              key={number}
+              rank={number}
+              iconUrl="https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/6725.png"
+              summonerName="ARIANA GRANDE"
+              label="SUMMONER"
+              points="1322113123"
+              frameBackground={frame}
+            />
+          )
+        })}
       </div>
 		</OverlayCard>
 	)

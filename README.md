@@ -1,40 +1,222 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# OVERLAY JSON STRUCTURE
 
-## Getting Started
+## Slide 1: Challenges Ranking
 
-First, run the development server:
+Display the challenges for the week
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### Data Structure
+
+```json
+[
+  // The placement is always 1 because we are showing the leading team from each challenge
+  {
+    "team_id": "TEAM_NOXUS",
+    "challenge": "WINS",
+    "label": "Wins",
+    "score": 1242,
+    "placement": 1
+  },
+  {
+    "team_id": "TEAM_NOXUS",
+    "challenge": "PORO_SNACKS",
+    "label": "Poro snacks",
+    "score": 1242,
+    "placement": 1
+  }
+]
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Slide 2: Team Players Ranking
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Displays player rankings within a team (based on the influencer).
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### Data Structure
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+```json
+[
+    // Influences from team NOXUS
+    {
+        "team_id": "TEAM_NOXUS",
+        "captain_riot_id": "captainriot_id#EUW"
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+        // Max 3 objects ( because only 3 players will be displayed)
+        "players": [
+            {
+                "riot_id": "SkiTlletron#EUW",
+                "score": 10,
+                "placement": 1
+            },
+            {
+                "riot_id": "#EUW",
+                "score": 9,
+                "placement": 2
+            },
+            {
+                "riot_id": "xLicht#EUW",
+                "score": 8,
+                "placement": 3
+            }
+        ]
+    },
+    // Influencer from team Demacia
+    {
+        "team_id": "TEAM_DEMACIA",
+        "captain_riot_id": "captainriot_id#DEMACIA",
+        "players": [
+            {
+                "riot_id": "SkiTlletron#DEMACIA",
+                "score": 10,
+                "placement": 1,
+                "captain": true
+            },
+            {
+                "riot_id": "#DEMACIA",
+                "score": 9,
+                "placement": 2,
+                "captain": false
+            },
+            {
+                "riot_id": "xLicht#DEMACIA",
+                "score": 8,
+                "placement": 3,
+                "captain": false
+            }
+        ]
+    },
+]
+```
 
-## Learn More
+## Slide 3: Teams placement
 
-To learn more about Next.js, take a look at the following resources:
+Displays the placement of the team within the 3 teams
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+```json
+[
+  {
+    "team_id": "TEAM_NOXUS",
+    "score": 1000,
+    "placement": 1,
+    "captain_riot_id": "captainriot_id#NOXUS"
+  },
+  {
+    "team_id": "TEAM_DEMACIA",
+    "score": 900,
+    "placement": 2,
+    "captain_riot_id": "captainriot_id#DEMACIA"
+  },
+  {
+    "team_id": "TEAM_IONIA",
+    "score": 800,
+    "placement": 3,
+    "captain_riot_id": "captainriot_id#IONIA"
+  }
+]
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Full JSON Format
 
-## Deploy on Vercel
+A mockup of the full object
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```json
+{
+  "timeframes": [
+    // Week 1 - 5
+    {
+      "active": true,
+      "start_date": "01.01.2025",
+      "end_date": "01.02.2025",
+      "data": {
+        // DATA Structure of the (slide 1)
+        "challenges": [
+          {
+            "team_id": "TEAM_NOXUS",
+            "challenge": "WINS",
+            "label": "Wins",
+            "score": 1242,
+            "placement": 1
+          },
+          {
+            "team_id": "TEAM_NOXUS",
+            "challenge": "PORO_SNACKS",
+            "label": "Poro snacks",
+            "score": 1242,
+            "placement": 1
+          } // ...
+        ],
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+        // Data structure of the (slide 2)
+        "team_players_ranking": [
+          {
+            "team_id": "TEAM_NOXUS",
+            "captain_riot_id": "captainriot_id#EUW",
+            "players": [
+              {
+                "riot_id": "SkiTlletron#EUW",
+                "score": 10,
+                "placement": 1
+              },
+              {
+                "riot_id": "#EUW",
+                "score": 9,
+                "placement": 2
+              },
+              {
+                "riot_id": "xLicht#EUW",
+                "score": 8,
+                "placement": 3
+              }
+            ]
+          },
+
+          {
+            "team_id": "TEAM_DEMACIA",
+            "captain_riot_id": "captainriot_id#DEMACIA",
+            "players": [
+              {
+                "riot_id": "SkiTlletron#DEMACIA",
+                "score": 10,
+                "placement": 1,
+                "captain": true
+              },
+              {
+                "riot_id": "#DEMACIA",
+                "score": 9,
+                "placement": 2,
+                "captain": false
+              },
+              {
+                "riot_id": "xLicht#DEMACIA",
+                "score": 8,
+                "placement": 3,
+                "captain": false
+              }
+            ]
+          }
+        ],
+
+        // Data structure of the slide 3 
+        "teams_ranking": [
+          {
+            "team_id": "TEAM_NOXUS",
+            "score": 1000,
+            "placement": 1,
+            "captain_riot_id": "captainriot_id#NOXUS"
+          },
+          {
+            "team_id": "TEAM_DEMACIA",
+            "score": 900,
+            "placement": 2,
+            "captain_riot_id": "captainriot_id#DEMACIA"
+          },
+          {
+            "team_id": "TEAM_IONIA",
+            "score": 800,
+            "placement": 3,
+            "captain_riot_id": "captainriot_id#IONIA"
+          }
+        ]
+      }
+    }
+  ]
+}
+```

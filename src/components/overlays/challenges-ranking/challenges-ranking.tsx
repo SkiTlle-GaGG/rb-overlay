@@ -1,5 +1,5 @@
 import React from 'react'
-import { OverlayCard } from '@/components/common/overlay-card'
+import { OverlayCard, TeamColor } from '@/components/common/overlay-card'
 import { TeamEnum, TeamType } from '@/types/team'
 import NoxusFrame from '@/assets/img/team/noxus/noxus_frame.png'
 import DemaciaFrame from '@/assets/img/team/Demacia/demacia_frame.png'
@@ -14,8 +14,10 @@ interface ChallengeStat {
 
 export default function ChallengesRanking({
 	stats,
+	teamColor,
 }: {
 	stats: ChallengeStat[]
+		teamColor: TeamColor
 }) {
 	return (
 		<OverlayCard title="CHALLENGES" subtitle="Team Ranking">

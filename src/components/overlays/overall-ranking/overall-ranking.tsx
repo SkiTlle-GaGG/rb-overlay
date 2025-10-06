@@ -23,9 +23,10 @@ function OverallRanking() {
 						key={number}
 						rank={number}
 						iconUrl="https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/6725.png"
-						summonerName="ARIANA GRANDE"
-						points="1322113123"
+						summonerName={"ARIANA GRANDE" + number}
+						points={number * 1000}
 						frameBackground={getFrameBackground(number)}
+						label={number === 1 ? "DEMACIA" : number === 2 ? "IONIA" : "NOXUS"}
 					/>
 				))}
 			</div>

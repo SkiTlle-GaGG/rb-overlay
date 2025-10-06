@@ -7,6 +7,7 @@ export interface PlayerItemProps {
 	summonerName: string
 	points: number | string
 	frameBackground: string
+	label: string
 }
 
 export function PlayerItem({
@@ -15,6 +16,7 @@ export function PlayerItem({
 	summonerName,
 	points,
 	frameBackground,
+	label,
 }: PlayerItemProps) {
 	return (
 		<div
@@ -45,7 +47,7 @@ export function PlayerItem({
 
 				{/* Summoner */}
 				<div>
-					<p className="font-redbull-book text-[12px]">SUMMONER</p>
+					<p className="font-redbull-book text-[12px]">{label}</p>
 					<p className="font-redbull-cond-bold text-[12px]">{summonerName}</p>
 				</div>
 			</div>
