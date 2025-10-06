@@ -1,35 +1,54 @@
 import { OverlayCard, TeamColor } from '@/components/common/overlay-card'
 import React from 'react'
-import DamaciaFrame from '@/assets/img/team/Demacia/demacia_frame.png'
-import NoxusFrame from '@/assets/img/team/noxus/noxus_frame.png'
-import IoniaFrame from '@/assets/img/team/ionia/ionia_frame.png'
-import { TeamPlayerItem } from '@/components/common/team-player-item'
 import { PlayerItem } from '@/components/common/team-player-item/team-player-item'
+import DemaciaFrame from '@/assets/img/team/Demacia/demacia_frame.png'
+import IoniaFrame from '@/assets/img/team/ionia/ionia_frame.png'
+import NoxusFrame from '@/assets/img/team/noxus/noxus_frame.png'
+import { TeamEnum, TeamType } from '@/types/team'
+import { TeamPlayersRankingData } from '@/types/overlay-data'
 
-function TeamPlayersRanking({ teamColor }: { teamColor: TeamColor }) {
-  const frame =
-    teamColor === TeamColor.DEMACIA
-      ? DamaciaFrame.src
-      : teamColor === TeamColor.NOXUS
-        ? NoxusFrame.src
-        : IoniaFrame.src
+interface TeamPlayersRankingProps {
+  data: TeamPlayersRankingData
+}
+
+function TeamPlayersRanking({ data }: TeamPlayersRankingProps) {
+
+  const getFrameBackground = (teamId: TeamType) => {
+    if (teamId === TeamEnum.DEMACIA) return DemaciaFrame.src
+    if (teamId === TeamEnum.IONIA) return IoniaFrame.src
+    return NoxusFrame.src
+  }
+
+  const getTeamColor = (teamId: TeamType): TeamColor => {
+    if (teamId === TeamEnum.DEMACIA) return TeamColor.DEMACIA
+    if (teamId === TeamEnum.IONIA) return TeamColor.IONIA
+    return TeamColor.NOXUS
+  }
+
+  const getTeamName = (teamId: TeamType) => {
+    if (teamId === TeamEnum.DEMACIA) return 'TEAM DEMACIA'
+    if (teamId === TeamEnum.IONIA) return 'TEAM IONIA'
+    return 'TEAM NOXUS'
+  }
 
 	return (
-		<OverlayCard title="TEAM OBSESSS" subtitle="TOP SPIELER" color={teamColor}>
+    <OverlayCard
+      title={getTeamName(data.team_id)}
+      subtitle="TOP SPIELER"
+      color={getTeamColor(data.team_id)}
+    >
       {/* List */}
-      <div
-        className={'flex flex-col gap-4 font-redbull-book text-[12px]'}
-      >
-        {[1, 2, 3].map((number) => {
+      <div className={'flex flex-col gap-4 font-redbull-book text-[12px]'}>
+        {data.players.map((player, index) => {
           return (
             <PlayerItem
-              key={number}
-              rank={number}
-              iconUrl="https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/6725.png"
-              summonerName="ARIANA GRANDE"
-              label="SUMMONER"
-              points="1322113123"
-              frameBackground={frame}
+              key={index}
+              rank={player.placement}
+              iconUrl={player.icon_url}
+              summonerName={player.riot_id}
+              label={player.captain ? 'CAPTAIN' : 'SUMMONER'}
+              points={player.score}
+              frameBackground={getFrameBackground(data.team_id)}
             />
           )
         })}
@@ -38,4 +57,4 @@ function TeamPlayersRanking({ teamColor }: { teamColor: TeamColor }) {
 	)
 }
 
-export default TeamPlayersRanking;
+export default TeamPlayersRanking

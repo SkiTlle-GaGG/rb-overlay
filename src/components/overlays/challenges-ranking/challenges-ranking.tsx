@@ -1,24 +1,24 @@
 import React from 'react'
-import { OverlayCard, TeamColor } from '@/components/common/overlay-card'
+import { OverlayCard } from '@/components/common/overlay-card'
 import { TeamEnum, TeamType } from '@/types/team'
+import { Challenge } from '@/types/overlay-data'
 import NoxusFrame from '@/assets/img/team/noxus/noxus_frame.png'
 import DemaciaFrame from '@/assets/img/team/Demacia/demacia_frame.png'
 import IoniaFrame from '@/assets/img/team/ionia/ionia_frame.png'
 import styles from './challenges-ranking.module.css'
 
-interface ChallengeStat {
-	name: string
-	points: number
-	team: TeamType
+interface ChallengesRankingProps {
+	challenges: Challenge[]
 }
 
-export default function ChallengesRanking({
-	stats,
-	teamColor,
-}: {
-	stats: ChallengeStat[]
-		teamColor: TeamColor
-}) {
+export default function ChallengesRanking({ challenges }: ChallengesRankingProps) {
+
+	const getFrameBackground = (teamId: TeamType) => {
+		if (teamId === TeamEnum.DEMACIA) return DemaciaFrame.src
+		if (teamId === TeamEnum.IONIA) return IoniaFrame.src
+		return NoxusFrame.src
+	}
+
 	return (
 		<OverlayCard title="CHALLENGES" subtitle="Team Ranking">
 			<div className={styles.challengeStatsHeader}>
@@ -26,22 +26,16 @@ export default function ChallengesRanking({
 				<p className={styles.challengeStatsLabel}>PUNKTE</p>
 			</div>
 			<div className={styles.challengeStats}>
-				{stats.map((stat, index) => (
+				{challenges.map((challenge, index) => (
 					<div
 						key={index}
 						className={styles.challengeStatItem}
 						style={{
-							backgroundImage: `url(${
-								stat.team === TeamEnum.NOXUS
-									? NoxusFrame.src
-									: stat.team === TeamEnum.DEMACIA
-									? DemaciaFrame.src
-									: IoniaFrame.src
-							})`,
+							backgroundImage: `url(${getFrameBackground(challenge.team_id)})`,
 						}}
 					>
-						<p className={styles.challengeStatName}>{stat.name}</p>
-						<p className={styles.challengeStatPoints}>{stat.points}</p>
+						<p className={styles.challengeStatName}>{challenge.label}</p>
+						<p className={styles.challengeStatPoints}>{challenge.score}</p>
 					</div>
 				))}
 			</div>

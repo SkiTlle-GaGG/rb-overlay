@@ -44,17 +44,20 @@ Displays player rankings within a team (based on the influencer).
             {
                 "riot_id": "SkiTlletron#EUW",
                 "score": 10,
-                "placement": 1
+                "placement": 1,
+                "icon_url": "url"
             },
             {
                 "riot_id": "#EUW",
                 "score": 9,
-                "placement": 2
+                "placement": 2,
+                "icon_url": "url"
             },
             {
                 "riot_id": "xLicht#EUW",
                 "score": 8,
-                "placement": 3
+                "placement": 3,
+                "icon_url": "url"
             }
         ]
     },
@@ -67,19 +70,22 @@ Displays player rankings within a team (based on the influencer).
                 "riot_id": "SkiTlletron#DEMACIA",
                 "score": 10,
                 "placement": 1,
-                "captain": true
+                "captain": true,
+                "icon_url": "url"
             },
             {
                 "riot_id": "#DEMACIA",
                 "score": 9,
                 "placement": 2,
-                "captain": false
+                "captain": false,
+                "icon_url": "url"
             },
             {
                 "riot_id": "xLicht#DEMACIA",
                 "score": 8,
                 "placement": 3,
-                "captain": false
+                "captain": false,
+                "icon_url": "url"
             }
         ]
     },
@@ -96,19 +102,22 @@ Displays the placement of the team within the 3 teams
     "team_id": "TEAM_NOXUS",
     "score": 1000,
     "placement": 1,
-    "captain_riot_id": "captainriot_id#NOXUS"
+    "captain_riot_id": "captainriot_id#NOXUS",
+    "icon_url": "url"
   },
   {
     "team_id": "TEAM_DEMACIA",
     "score": 900,
     "placement": 2,
-    "captain_riot_id": "captainriot_id#DEMACIA"
+    "captain_riot_id": "captainriot_id#DEMACIA",
+    "icon_url": "url"
   },
   {
     "team_id": "TEAM_IONIA",
     "score": 800,
     "placement": 3,
-    "captain_riot_id": "captainriot_id#IONIA"
+    "captain_riot_id": "captainriot_id#IONIA",
+    "icon_url": "url"
   }
 ]
 ```
@@ -133,14 +142,16 @@ A mockup of the full object
             "challenge": "WINS",
             "label": "Wins",
             "score": 1242,
-            "placement": 1
+            "placement": 1,
+            "icon_url": "url"
           },
           {
             "team_id": "TEAM_NOXUS",
             "challenge": "PORO_SNACKS",
             "label": "Poro snacks",
             "score": 1242,
-            "placement": 1
+            "placement": 1,
+            "icon_url": "url"
           } // ...
         ],
 
@@ -153,17 +164,20 @@ A mockup of the full object
               {
                 "riot_id": "SkiTlletron#EUW",
                 "score": 10,
-                "placement": 1
+                "placement": 1,
+                "icon_url": "url"
               },
               {
                 "riot_id": "#EUW",
                 "score": 9,
-                "placement": 2
+                "placement": 2,
+                "icon_url": "url"
               },
               {
                 "riot_id": "xLicht#EUW",
                 "score": 8,
-                "placement": 3
+                "placement": 3,
+                "icon_url": "url"
               }
             ]
           },
@@ -176,19 +190,22 @@ A mockup of the full object
                 "riot_id": "SkiTlletron#DEMACIA",
                 "score": 10,
                 "placement": 1,
-                "captain": true
+                "captain": true,
+                "icon_url": "url"
               },
               {
                 "riot_id": "#DEMACIA",
                 "score": 9,
                 "placement": 2,
-                "captain": false
+                "captain": false,
+                "icon_url": "url"
               },
               {
                 "riot_id": "xLicht#DEMACIA",
                 "score": 8,
                 "placement": 3,
-                "captain": false
+                "captain": false,
+                "icon_url": "url"
               }
             ]
           }
@@ -200,19 +217,22 @@ A mockup of the full object
             "team_id": "TEAM_NOXUS",
             "score": 1000,
             "placement": 1,
-            "captain_riot_id": "captainriot_id#NOXUS"
+            "captain_riot_id": "captainriot_id#NOXUS",
+            "icon_url": "url"
           },
           {
             "team_id": "TEAM_DEMACIA",
             "score": 900,
             "placement": 2,
-            "captain_riot_id": "captainriot_id#DEMACIA"
+            "captain_riot_id": "captainriot_id#DEMACIA",
+            "icon_url": "url"
           },
           {
             "team_id": "TEAM_IONIA",
             "score": 800,
             "placement": 3,
-            "captain_riot_id": "captainriot_id#IONIA"
+            "captain_riot_id": "captainriot_id#IONIA",
+            "icon_url": "url"
           }
         ]
       }
