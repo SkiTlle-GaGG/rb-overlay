@@ -1,148 +1,746 @@
 {
 	"timeframes": [
-		{
-			"active": true,
-			"start_date": "01.01.2025",
-			"end_date": "01.02.2025",
-			"data": {
-				"challenges": [
-					{
-						"team_id": "NOXUS_TEAM",
-						"challenge": "WINS",
-						"label": "Wins",
-						"score": 1242,
-						"placement": 1
-					},
-					{
-						"team_id": "IONIA_TEAM",
-						"challenge": "PORO_SNACKS",
-						"label": "Poro snacks",
-						"score": 1100,
-						"placement": 1
-					},
-					{
-						"team_id": "DEMACIA_TEAM",
-						"challenge": "TAKEDOWNS",
-						"label": "40+ Takedowns",
-						"score": 980,
-						"placement": 1
-					},
-					{
-						"team_id": "NOXUS_TEAM",
-						"challenge": "DAMAGE",
-						"label": "XK Damage",
-						"score": 1500,
-						"placement": 1
-					}
-				],
-				"team_players_ranking": [
-					{
-						"team_id": "NOXUS_TEAM",
-						"captain_riot_id": "captainriot_id#EUW",
-						"players": [
-							{
-								"riot_id": "SkiTlletron#EUW",
-								"score": 10,
-								"placement": 1,
-								"icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/6725.png",
-								"captain": true
-							},
-							{
-								"riot_id": "PlayerTwo#EUW",
-								"score": 9,
-								"placement": 2,
-								"icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/6725.png",
-								"captain": false
-							},
-							{
-								"riot_id": "xLicht#EUW",
-								"score": 8,
-								"placement": 3,
-								"icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/6725.png",
-								"captain": false
-							}
-						]
-					},
-					{
-						"team_id": "DEMACIA_TEAM",
-						"captain_riot_id": "captainriot_id#DEMACIA",
-						"players": [
-							{
-								"riot_id": "SkiTlletron#DEMACIA",
-								"score": 10,
-								"placement": 1,
-								"icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/6725.png",
-								"captain": true
-							},
-							{
-								"riot_id": "PlayerDemacia#DEMACIA",
-								"score": 9,
-								"placement": 2,
-								"icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/6725.png",
-								"captain": false
-							},
-							{
-								"riot_id": "xLicht#DEMACIA",
-								"score": 8,
-								"placement": 3,
-								"icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/6725.png",
-								"captain": false
-							}
-						]
-					},
-					{
-						"team_id": "IONIA_TEAM",
-						"captain_riot_id": "captainriot_id#IONIA",
-						"players": [
-							{
-								"riot_id": "SkiTlletron#IONIA",
-								"score": 10,
-								"placement": 1,
-								"icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/6725.png",
-								"captain": true
-							},
-							{
-								"riot_id": "PlayerIonia#IONIA",
-								"score": 9,
-								"placement": 2,
-								"icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/6725.png",
-								"captain": false
-							},
-							{
-								"riot_id": "xLicht#IONIA",
-								"score": 8,
-								"placement": 3,
-								"icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/6725.png",
-								"captain": false
-							}
-						]
-					}
-				],
-				"teams_ranking": [
-					{
-						"team_id": "NOXUS_TEAM",
-						"score": 1000,
-						"placement": 1,
-						"captain_riot_id": "captainriot_id#NOXUS",
-						"icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/6725.png"
-					},
-					{
-						"team_id": "DEMACIA_TEAM",
-						"score": 900,
-						"placement": 2,
-						"captain_riot_id": "captainriot_id#DEMACIA",
-						"icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/6725.png"
-					},
-					{
-						"team_id": "IONIA_TEAM",
-						"score": 800,
-						"placement": 3,
-						"captain_riot_id": "captainriot_id#IONIA",
-						"icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/6725.png"
-					}
-				]
+	  {
+		"active": true,
+		"start_date": "20/08/2025, 09:00:00",
+		"end_date": "11/10/2025, 09:00:00",
+		"data": {
+		  "challenges": [
+			{
+			  "team_id": "7bc23a43-3ffc-410a-9a7f-ded6dc72b99f",
+			  "challenge": "WEEK_1",
+			  "label": "Week 1",
+			  "score": 1271,
+			  "placement": "1",
+			  "icon_url": "url"
 			}
+		  ],
+		  "team_players_ranking": [
+			{
+			  "team_id": "89f7341e-c5e9-4c4e-9868-a2c860be12c4",
+			  "captain_riot_id": "Volsebnik#PoB",
+			  "players": [
+				{
+				  "riot_id": "Volsebnik#PoB",
+				  "score": 217824.38888888888,
+				  "placement": 1,
+				  "captain": true,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250005#RIOT",
+				  "score": 122262,
+				  "placement": 2,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250011#RIOT",
+				  "score": 0,
+				  "placement": 3,
+				  "captain": false,
+				  "icon_url": "url"
+				}
+			  ]
+			},
+			{
+			  "team_id": "7c03192c-f431-4e23-bb29-eaf9f8b69ffd",
+			  "captain_riot_id": "Lannito#bop",
+			  "players": [
+				{
+				  "riot_id": "Lannito#bop",
+				  "score": 281652.61947519414,
+				  "placement": 1,
+				  "captain": true,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250015#RIOT",
+				  "score": 5617.5,
+				  "placement": 2,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "G4m3rguy91#9218",
+				  "score": 418,
+				  "placement": 3,
+				  "captain": false,
+				  "icon_url": "url"
+				}
+			  ]
+			},
+			{
+			  "team_id": "7bc23a43-3ffc-410a-9a7f-ded6dc72b99f",
+			  "captain_riot_id": "FTW250008#RIOT",
+			  "players": [
+				{
+				  "riot_id": "FTW250009#RIOT",
+				  "score": 565362.53125,
+				  "placement": 1,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250007#RIOT",
+				  "score": 511506.22507991863,
+				  "placement": 2,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250008#RIOT",
+				  "score": 404326.3823529412,
+				  "placement": 3,
+				  "captain": true,
+				  "icon_url": "url"
+				}
+			  ]
+			}
+		  ],
+		  "teams_ranking": [
+			{
+			  "team_id": "7bc23a43-3ffc-410a-9a7f-ded6dc72b99f",
+			  "score": 9610,
+			  "placement": "1",
+			  "captain_riot_id": "FTW250008#RIOT",
+			  "icon_url": "url"
+			},
+			{
+			  "team_id": "7c03192c-f431-4e23-bb29-eaf9f8b69ffd",
+			  "score": 4868,
+			  "placement": "2",
+			  "captain_riot_id": "Lannito#bop",
+			  "icon_url": "url"
+			},
+			{
+			  "team_id": "89f7341e-c5e9-4c4e-9868-a2c860be12c4",
+			  "score": 142,
+			  "placement": "3",
+			  "captain_riot_id": "Volsebnik#PoB",
+			  "icon_url": "url"
+			}
+		  ]
 		}
+	  },
+	  {
+		"active": true,
+		"start_date": "21/08/2025, 09:00:00",
+		"end_date": "11/10/2025, 09:00:00",
+		"data": {
+		  "challenges": [
+			{
+			  "team_id": "7bc23a43-3ffc-410a-9a7f-ded6dc72b99f",
+			  "challenge": "WEEK_2",
+			  "label": "Week 2",
+			  "score": 887,
+			  "placement": "1",
+			  "icon_url": "url"
+			}
+		  ],
+		  "team_players_ranking": [
+			{
+			  "team_id": "89f7341e-c5e9-4c4e-9868-a2c860be12c4",
+			  "captain_riot_id": "Volsebnik#PoB",
+			  "players": [
+				{
+				  "riot_id": "Volsebnik#PoB",
+				  "score": 217824.38888888888,
+				  "placement": 1,
+				  "captain": true,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250005#RIOT",
+				  "score": 122262,
+				  "placement": 2,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250011#RIOT",
+				  "score": 0,
+				  "placement": 3,
+				  "captain": false,
+				  "icon_url": "url"
+				}
+			  ]
+			},
+			{
+			  "team_id": "7c03192c-f431-4e23-bb29-eaf9f8b69ffd",
+			  "captain_riot_id": "Lannito#bop",
+			  "players": [
+				{
+				  "riot_id": "Lannito#bop",
+				  "score": 281652.61947519414,
+				  "placement": 1,
+				  "captain": true,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250015#RIOT",
+				  "score": 5617.5,
+				  "placement": 2,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "G4m3rguy91#9218",
+				  "score": 418,
+				  "placement": 3,
+				  "captain": false,
+				  "icon_url": "url"
+				}
+			  ]
+			},
+			{
+			  "team_id": "7bc23a43-3ffc-410a-9a7f-ded6dc72b99f",
+			  "captain_riot_id": "FTW250008#RIOT",
+			  "players": [
+				{
+				  "riot_id": "FTW250009#RIOT",
+				  "score": 565362.53125,
+				  "placement": 1,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250007#RIOT",
+				  "score": 511506.22507991863,
+				  "placement": 2,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250008#RIOT",
+				  "score": 404326.3823529412,
+				  "placement": 3,
+				  "captain": true,
+				  "icon_url": "url"
+				}
+			  ]
+			}
+		  ],
+		  "teams_ranking": [
+			{
+			  "team_id": "7bc23a43-3ffc-410a-9a7f-ded6dc72b99f",
+			  "score": 9610,
+			  "placement": "1",
+			  "captain_riot_id": "FTW250008#RIOT",
+			  "icon_url": "url"
+			},
+			{
+			  "team_id": "7c03192c-f431-4e23-bb29-eaf9f8b69ffd",
+			  "score": 4868,
+			  "placement": "2",
+			  "captain_riot_id": "Lannito#bop",
+			  "icon_url": "url"
+			},
+			{
+			  "team_id": "89f7341e-c5e9-4c4e-9868-a2c860be12c4",
+			  "score": 142,
+			  "placement": "3",
+			  "captain_riot_id": "Volsebnik#PoB",
+			  "icon_url": "url"
+			}
+		  ]
+		}
+	  },
+	  {
+		"active": true,
+		"start_date": "23/08/2025, 09:00:00",
+		"end_date": "11/10/2025, 09:00:00",
+		"data": {
+		  "challenges": [
+			{
+			  "team_id": "7bc23a43-3ffc-410a-9a7f-ded6dc72b99f",
+			  "challenge": "WEEK_4",
+			  "label": "Week 4",
+			  "score": 994,
+			  "placement": "1",
+			  "icon_url": "url"
+			}
+		  ],
+		  "team_players_ranking": [
+			{
+			  "team_id": "89f7341e-c5e9-4c4e-9868-a2c860be12c4",
+			  "captain_riot_id": "Volsebnik#PoB",
+			  "players": [
+				{
+				  "riot_id": "Volsebnik#PoB",
+				  "score": 217824.38888888888,
+				  "placement": 1,
+				  "captain": true,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250005#RIOT",
+				  "score": 122262,
+				  "placement": 2,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250011#RIOT",
+				  "score": 0,
+				  "placement": 3,
+				  "captain": false,
+				  "icon_url": "url"
+				}
+			  ]
+			},
+			{
+			  "team_id": "7c03192c-f431-4e23-bb29-eaf9f8b69ffd",
+			  "captain_riot_id": "Lannito#bop",
+			  "players": [
+				{
+				  "riot_id": "Lannito#bop",
+				  "score": 281652.61947519414,
+				  "placement": 1,
+				  "captain": true,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250015#RIOT",
+				  "score": 5617.5,
+				  "placement": 2,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "G4m3rguy91#9218",
+				  "score": 418,
+				  "placement": 3,
+				  "captain": false,
+				  "icon_url": "url"
+				}
+			  ]
+			},
+			{
+			  "team_id": "7bc23a43-3ffc-410a-9a7f-ded6dc72b99f",
+			  "captain_riot_id": "FTW250008#RIOT",
+			  "players": [
+				{
+				  "riot_id": "FTW250009#RIOT",
+				  "score": 565362.53125,
+				  "placement": 1,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250007#RIOT",
+				  "score": 511506.22507991863,
+				  "placement": 2,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250008#RIOT",
+				  "score": 404326.3823529412,
+				  "placement": 3,
+				  "captain": true,
+				  "icon_url": "url"
+				}
+			  ]
+			}
+		  ],
+		  "teams_ranking": [
+			{
+			  "team_id": "7bc23a43-3ffc-410a-9a7f-ded6dc72b99f",
+			  "score": 9610,
+			  "placement": "1",
+			  "captain_riot_id": "FTW250008#RIOT",
+			  "icon_url": "url"
+			},
+			{
+			  "team_id": "7c03192c-f431-4e23-bb29-eaf9f8b69ffd",
+			  "score": 4868,
+			  "placement": "2",
+			  "captain_riot_id": "Lannito#bop",
+			  "icon_url": "url"
+			},
+			{
+			  "team_id": "89f7341e-c5e9-4c4e-9868-a2c860be12c4",
+			  "score": 142,
+			  "placement": "3",
+			  "captain_riot_id": "Volsebnik#PoB",
+			  "icon_url": "url"
+			}
+		  ]
+		}
+	  },
+	  {
+		"active": true,
+		"start_date": "22/08/2025, 09:00:00",
+		"end_date": "11/10/2025, 00:00:00",
+		"data": {
+		  "challenges": [
+			{
+			  "team_id": "7bc23a43-3ffc-410a-9a7f-ded6dc72b99f",
+			  "challenge": "WEEK_3",
+			  "label": "Week 3",
+			  "score": 796,
+			  "placement": "1",
+			  "icon_url": "url"
+			}
+		  ],
+		  "team_players_ranking": [
+			{
+			  "team_id": "89f7341e-c5e9-4c4e-9868-a2c860be12c4",
+			  "captain_riot_id": "Volsebnik#PoB",
+			  "players": [
+				{
+				  "riot_id": "Volsebnik#PoB",
+				  "score": 217824.38888888888,
+				  "placement": 1,
+				  "captain": true,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250005#RIOT",
+				  "score": 122262,
+				  "placement": 2,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250011#RIOT",
+				  "score": 0,
+				  "placement": 3,
+				  "captain": false,
+				  "icon_url": "url"
+				}
+			  ]
+			},
+			{
+			  "team_id": "7c03192c-f431-4e23-bb29-eaf9f8b69ffd",
+			  "captain_riot_id": "Lannito#bop",
+			  "players": [
+				{
+				  "riot_id": "Lannito#bop",
+				  "score": 281652.61947519414,
+				  "placement": 1,
+				  "captain": true,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250015#RIOT",
+				  "score": 5617.5,
+				  "placement": 2,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "G4m3rguy91#9218",
+				  "score": 418,
+				  "placement": 3,
+				  "captain": false,
+				  "icon_url": "url"
+				}
+			  ]
+			},
+			{
+			  "team_id": "7bc23a43-3ffc-410a-9a7f-ded6dc72b99f",
+			  "captain_riot_id": "FTW250008#RIOT",
+			  "players": [
+				{
+				  "riot_id": "FTW250009#RIOT",
+				  "score": 565362.53125,
+				  "placement": 1,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250007#RIOT",
+				  "score": 511506.22507991863,
+				  "placement": 2,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250008#RIOT",
+				  "score": 404326.3823529412,
+				  "placement": 3,
+				  "captain": true,
+				  "icon_url": "url"
+				}
+			  ]
+			}
+		  ],
+		  "teams_ranking": [
+			{
+			  "team_id": "7bc23a43-3ffc-410a-9a7f-ded6dc72b99f",
+			  "score": 9610,
+			  "placement": "1",
+			  "captain_riot_id": "FTW250008#RIOT",
+			  "icon_url": "url"
+			},
+			{
+			  "team_id": "7c03192c-f431-4e23-bb29-eaf9f8b69ffd",
+			  "score": 4868,
+			  "placement": "2",
+			  "captain_riot_id": "Lannito#bop",
+			  "icon_url": "url"
+			},
+			{
+			  "team_id": "89f7341e-c5e9-4c4e-9868-a2c860be12c4",
+			  "score": 142,
+			  "placement": "3",
+			  "captain_riot_id": "Volsebnik#PoB",
+			  "icon_url": "url"
+			}
+		  ]
+		}
+	  }
+	],
+	"main_leaderboard": [
+	  {
+		"active": true,
+		"start_date": "19/08/2025, 09:00:00",
+		"end_date": "11/10/2025, 11:45:00",
+		"data": {
+		  "challenges": [
+			{
+			  "team_id": "7bc23a43-3ffc-410a-9a7f-ded6dc72b99f",
+			  "challenge": "OVERALL_LEADERBOARD",
+			  "label": "Overall Leaderboard",
+			  "score": 4805,
+			  "placement": "1",
+			  "icon_url": "url"
+			}
+		  ],
+		  "team_players_ranking": [
+			{
+			  "team_id": "89f7341e-c5e9-4c4e-9868-a2c860be12c4",
+			  "captain_riot_id": "Volsebnik#PoB",
+			  "players": [
+				{
+				  "riot_id": "Volsebnik#PoB",
+				  "score": 217824.38888888888,
+				  "placement": 1,
+				  "captain": true,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250005#RIOT",
+				  "score": 122262,
+				  "placement": 2,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250011#RIOT",
+				  "score": 0,
+				  "placement": 3,
+				  "captain": false,
+				  "icon_url": "url"
+				}
+			  ]
+			},
+			{
+			  "team_id": "7c03192c-f431-4e23-bb29-eaf9f8b69ffd",
+			  "captain_riot_id": "Lannito#bop",
+			  "players": [
+				{
+				  "riot_id": "Lannito#bop",
+				  "score": 281652.61947519414,
+				  "placement": 1,
+				  "captain": true,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250015#RIOT",
+				  "score": 5617.5,
+				  "placement": 2,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "G4m3rguy91#9218",
+				  "score": 418,
+				  "placement": 3,
+				  "captain": false,
+				  "icon_url": "url"
+				}
+			  ]
+			},
+			{
+			  "team_id": "7bc23a43-3ffc-410a-9a7f-ded6dc72b99f",
+			  "captain_riot_id": "FTW250008#RIOT",
+			  "players": [
+				{
+				  "riot_id": "FTW250009#RIOT",
+				  "score": 565362.53125,
+				  "placement": 1,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250007#RIOT",
+				  "score": 511506.22507991863,
+				  "placement": 2,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250008#RIOT",
+				  "score": 404326.3823529412,
+				  "placement": 3,
+				  "captain": true,
+				  "icon_url": "url"
+				}
+			  ]
+			}
+		  ],
+		  "teams_ranking": [
+			{
+			  "team_id": "7bc23a43-3ffc-410a-9a7f-ded6dc72b99f",
+			  "score": 9610,
+			  "placement": "1",
+			  "captain_riot_id": "FTW250008#RIOT",
+			  "icon_url": "url"
+			},
+			{
+			  "team_id": "7c03192c-f431-4e23-bb29-eaf9f8b69ffd",
+			  "score": 4868,
+			  "placement": "2",
+			  "captain_riot_id": "Lannito#bop",
+			  "icon_url": "url"
+			},
+			{
+			  "team_id": "89f7341e-c5e9-4c4e-9868-a2c860be12c4",
+			  "score": 142,
+			  "placement": "3",
+			  "captain_riot_id": "Volsebnik#PoB",
+			  "icon_url": "url"
+			}
+		  ]
+		}
+	  }
+	],
+	"forever_challenge": [
+	  {
+		"active": true,
+		"start_date": "19/08/2025, 09:00:00",
+		"end_date": "11/10/2025, 09:00:00",
+		"data": {
+		  "challenges": [
+			{
+			  "team_id": "7bc23a43-3ffc-410a-9a7f-ded6dc72b99f",
+			  "challenge": "FOREVER_CHALLENGES",
+			  "label": "Forever Challenges",
+			  "score": 857,
+			  "placement": "1",
+			  "icon_url": "url"
+			}
+		  ],
+		  "team_players_ranking": [
+			{
+			  "team_id": "89f7341e-c5e9-4c4e-9868-a2c860be12c4",
+			  "captain_riot_id": "Volsebnik#PoB",
+			  "players": [
+				{
+				  "riot_id": "Volsebnik#PoB",
+				  "score": 217824.38888888888,
+				  "placement": 1,
+				  "captain": true,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250005#RIOT",
+				  "score": 122262,
+				  "placement": 2,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250011#RIOT",
+				  "score": 0,
+				  "placement": 3,
+				  "captain": false,
+				  "icon_url": "url"
+				}
+			  ]
+			},
+			{
+			  "team_id": "7c03192c-f431-4e23-bb29-eaf9f8b69ffd",
+			  "captain_riot_id": "Lannito#bop",
+			  "players": [
+				{
+				  "riot_id": "Lannito#bop",
+				  "score": 281652.61947519414,
+				  "placement": 1,
+				  "captain": true,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250015#RIOT",
+				  "score": 5617.5,
+				  "placement": 2,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "G4m3rguy91#9218",
+				  "score": 418,
+				  "placement": 3,
+				  "captain": false,
+				  "icon_url": "url"
+				}
+			  ]
+			},
+			{
+			  "team_id": "7bc23a43-3ffc-410a-9a7f-ded6dc72b99f",
+			  "captain_riot_id": "FTW250008#RIOT",
+			  "players": [
+				{
+				  "riot_id": "FTW250009#RIOT",
+				  "score": 565362.53125,
+				  "placement": 1,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250007#RIOT",
+				  "score": 511506.22507991863,
+				  "placement": 2,
+				  "captain": false,
+				  "icon_url": "url"
+				},
+				{
+				  "riot_id": "FTW250008#RIOT",
+				  "score": 404326.3823529412,
+				  "placement": 3,
+				  "captain": true,
+				  "icon_url": "url"
+				}
+			  ]
+			}
+		  ],
+		  "teams_ranking": [
+			{
+			  "team_id": "7bc23a43-3ffc-410a-9a7f-ded6dc72b99f",
+			  "score": 9610,
+			  "placement": "1",
+			  "captain_riot_id": "FTW250008#RIOT",
+			  "icon_url": "url"
+			},
+			{
+			  "team_id": "7c03192c-f431-4e23-bb29-eaf9f8b69ffd",
+			  "score": 4868,
+			  "placement": "2",
+			  "captain_riot_id": "Lannito#bop",
+			  "icon_url": "url"
+			},
+			{
+			  "team_id": "89f7341e-c5e9-4c4e-9868-a2c860be12c4",
+			  "score": 142,
+			  "placement": "3",
+			  "captain_riot_id": "Volsebnik#PoB",
+			  "icon_url": "url"
+			}
+		  ]
+		}
+	  }
 	]
-}
-
+  }

@@ -1,5 +1,6 @@
 /* Overlay-specific styles for OBS streaming */
-html, body {
+html,
+body {
   background: transparent !important;
   margin: 0;
   padding: 0;
