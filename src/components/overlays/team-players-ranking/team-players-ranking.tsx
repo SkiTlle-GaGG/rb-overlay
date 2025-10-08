@@ -1,5 +1,5 @@
 import { OverlayCard, TeamColor } from '@/components/common/overlay-card'
-import React, { useEffect, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { PlayerItem } from '@/components/common/team-player-item/team-player-item'
 import DemaciaFrame from '@/assets/img/team/Demacia/demacia_frame.png'
 import IoniaFrame from '@/assets/img/team/ionia/ionia_frame.png'
@@ -34,7 +34,7 @@ function TeamPlayersRanking({ data }: TeamPlayersRankingProps) {
   }
 
   const dataPlayers = useMemo(() => {
-    return data.players ?? []
+    return data?.players ?? []
   }, [data])
 
 

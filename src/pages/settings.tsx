@@ -10,8 +10,6 @@ import {
   User, 
   Bell, 
   Shield,
-  Palette,
-  Database,
   Monitor
 } from "lucide-react";
 
