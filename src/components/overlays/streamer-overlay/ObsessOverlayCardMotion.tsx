@@ -33,6 +33,7 @@ function ObsessOverlayMotion() {
 
     const getCurrentWeek = (eventData: any) => {
         const timeframes = eventData?.timeframes
+
         const activeWeek = timeframes?.find((el: any) => el.active)
         if (activeWeek) {
             return activeWeek
@@ -164,7 +165,20 @@ function ObsessOverlayMotion() {
                 <div className="absolute top-0 right-100">
                     {isDev &&
                         <>
-                            <Input className=" w-48" type="number" value={showCardIndex} onChange={(e) => setShowCardIndex(Number(e.target.value))} />
+                        <div className="flex flex-col gap-2 my-2">
+                            <label className="text-xs">First Start (s)</label>
+                            <Input
+                                className="w-48"
+                                type="number"
+                                value={FIRST_START_TIME_IN_SECONDS}
+                                onChange={e => setFIRST_START_TIME_IN_SECONDS(Number(e.target.value))}
+                            />
+                            <Button onClick={() => {
+                                navigator.clipboard.writeText(window.location.origin + window.location.pathname)
+                            }}>
+                                Copy clean link
+                            </Button>
+                        </div>
 
                             <div className="w-48">
                                 {JSON.stringify({ overlayVisible, OVERLAY_VISIBLE_BETWEEN })} {currentTimeInSeconds}
