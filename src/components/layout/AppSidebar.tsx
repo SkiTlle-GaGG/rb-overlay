@@ -9,8 +9,10 @@ import {
   Settings, 
   Users,
   Trophy,
-  Gamepad2
+  Gamepad2,
+  LogOut
 } from "lucide-react"
+import { logout } from "@/lib/auth"
 
 import {
   Sidebar,
@@ -112,6 +114,13 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="border-t border-gaming-slate/20 p-4 bg-redbull-black">
+        <button
+          onClick={logout}
+          className="flex items-center gap-3 w-full px-4 py-2 mb-2 text-gaming-light-gray hover:text-white hover:bg-gaming-slate/10 rounded-lg transition-all duration-200 font-redbull-book tracking-wide"
+        >
+          <LogOut className="h-4 w-4" />
+          Logout
+        </button>
         <div className="text-xs text-gaming-light-gray/50 text-center font-redbull-book">
           © 2024 Red Bull Gaming
         </div>

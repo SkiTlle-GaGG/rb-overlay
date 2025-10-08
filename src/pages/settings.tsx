@@ -12,8 +12,9 @@ import {
   Shield,
   Monitor
 } from "lucide-react";
+import withAuth from "@/components/hoc/Auth";
 
-export default function Settings() {
+export function Settings() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
@@ -269,3 +270,5 @@ export default function Settings() {
     </DashboardLayout>
   );
 }
+
+export default withAuth(Settings);

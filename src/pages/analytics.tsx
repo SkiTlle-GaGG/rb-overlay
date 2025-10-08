@@ -10,7 +10,7 @@ import {
   Zap
 } from "lucide-react";
 
-export default function Analytics() {
+export function Analytics() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
@@ -237,3 +237,5 @@ export default function Analytics() {
     </DashboardLayout>
   );
 }
+
+export default withAuth(Analytics);

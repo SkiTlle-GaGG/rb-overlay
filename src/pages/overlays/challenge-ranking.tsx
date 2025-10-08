@@ -1,6 +1,7 @@
 import { ChallengesRanking } from '@/components/overlays/challenges-ranking'
 import { useEffect, useMemo, useState } from 'react'
 import { Challenge, EventData } from '@/types/overlay-data'
+import { withAuth } from "@/components/hoc";
 
 
 function ChallengeRankingPage() {
@@ -22,4 +23,4 @@ function ChallengeRankingPage() {
   return <ChallengesRanking challenges={challengesData} />
 }
 
-export default ChallengeRankingPage
+export default withAuth(ChallengeRankingPage);

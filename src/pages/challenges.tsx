@@ -3,8 +3,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Trophy, Target, Clock, Award } from "lucide-react";
+import withAuth from "@/components/hoc/Auth";
 
-export default function Challenges() {
+export function Challenges() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
@@ -197,3 +198,5 @@ export default function Challenges() {
     </DashboardLayout>
   );
 }
+
+export default withAuth(Challenges);

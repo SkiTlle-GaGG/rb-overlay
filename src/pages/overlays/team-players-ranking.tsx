@@ -1,6 +1,7 @@
 import React from 'react'
 import { TeamPlayersRanking } from '@/components/overlays/team-players-ranking'
 import { TeamEnum } from '@/types/team'
+import { withAuth } from "@/components/hoc";
 
 function TeamPlayersRankingPage() {
   const teamPlayersRankingData = [
@@ -27,4 +28,4 @@ function TeamPlayersRankingPage() {
   )
 }
 
-export default TeamPlayersRankingPage
+export default withAuth(TeamPlayersRankingPage);

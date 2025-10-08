@@ -2,8 +2,9 @@ import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Users, Crown, Shield, Sword } from "lucide-react";
+import withAuth from "@/components/hoc/Auth";
 
-export default function Teams() {
+export function Teams() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
@@ -172,3 +173,5 @@ export default function Teams() {
     </DashboardLayout>
   );
 }
+
+export default withAuth(Teams);

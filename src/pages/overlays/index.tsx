@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 
 import { Monitor, Eye, Download } from "lucide-react";
 import Link from "next/link";
+import { withAuth } from "@/components/hoc";
 
 const CARDS_DATA = [
   {
@@ -54,7 +55,7 @@ const CARDS_DATA = [
 
 
 ]
-export default function Overlays() {
+export function Overlays() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
@@ -164,3 +165,5 @@ export default function Overlays() {
     </DashboardLayout>
   );
 }
+
+export default withAuth(Overlays);

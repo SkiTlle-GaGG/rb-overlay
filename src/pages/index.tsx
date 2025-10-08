@@ -1,3 +1,4 @@
+import withAuth from "@/components/hoc/Auth";
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import {
   Card,
@@ -7,8 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Trophy, Users, Monitor, BarChart3 } from "lucide-react";
-
-export default function Home() {
+function Home() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
@@ -145,3 +145,5 @@ export default function Home() {
     </DashboardLayout>
   );
 }
+
+export default withAuth(Home);
