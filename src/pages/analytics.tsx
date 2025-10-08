@@ -9,6 +9,7 @@ import {
   Activity,
   Zap
 } from "lucide-react";
+import withAuth from "@/components/hoc/Auth";
 
 export function Analytics() {
   return (
