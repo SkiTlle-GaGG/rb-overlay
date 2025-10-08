@@ -1,6 +1,6 @@
-export type TeamType = "NOXUS_TEAM" | "DEMACIA_TEAM" | "IONIA_TEAM";
+export type TeamType = "NOXUS" | "DEMACIA" | "IONIA";
 export const TeamEnum = {
-  NOXUS: "NOXUS_TEAM" as TeamType,
-  DEMACIA: "DEMACIA_TEAM" as TeamType,
-  IONIA: "IONIA_TEAM" as TeamType
+  NOXUS: "NOXUS" as TeamType,
+  DEMACIA: "DEMACIA" as TeamType,
+  IONIA: "IONIA" as TeamType
 } as const;

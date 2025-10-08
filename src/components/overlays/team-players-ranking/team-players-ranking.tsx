@@ -1,5 +1,5 @@
 import { OverlayCard, TeamColor } from '@/components/common/overlay-card'
-import React from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { PlayerItem } from '@/components/common/team-player-item/team-player-item'
 import DemaciaFrame from '@/assets/img/team/Demacia/demacia_frame.png'
 import IoniaFrame from '@/assets/img/team/ionia/ionia_frame.png'
@@ -12,6 +12,8 @@ interface TeamPlayersRankingProps {
 }
 
 function TeamPlayersRanking({ data }: TeamPlayersRankingProps) {
+
+  if (data === null) return (<></>);
 
   const getFrameBackground = (teamId: TeamType) => {
     if (teamId === TeamEnum.DEMACIA) return DemaciaFrame.src
@@ -31,6 +33,11 @@ function TeamPlayersRanking({ data }: TeamPlayersRankingProps) {
     return 'TEAM NOXUS'
   }
 
+  const dataPlayers = useMemo(() => {
+    return data.players ?? []
+  }, [data])
+
+
 	return (
     <OverlayCard
       title={getTeamName(data.team_id)}
@@ -39,7 +46,7 @@ function TeamPlayersRanking({ data }: TeamPlayersRankingProps) {
     >
       {/* List */}
       <div className={'flex flex-col gap-4 font-redbull-book text-[12px]'}>
-        {data.players.map((player, index) => {
+        {dataPlayers.map((player, index) => {
           return (
             <PlayerItem
               key={index}
@@ -47,7 +54,7 @@ function TeamPlayersRanking({ data }: TeamPlayersRankingProps) {
               iconUrl={player.icon_url}
               summonerName={player.riot_id}
               label={player.captain ? 'CAPTAIN' : 'SUMMONER'}
-              points={player.score}
+              points={player.score.toFixed(0)}
               frameBackground={getFrameBackground(data.team_id)}
             />
           )

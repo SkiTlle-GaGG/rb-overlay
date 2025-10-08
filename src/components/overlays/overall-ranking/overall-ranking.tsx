@@ -1,5 +1,5 @@
 import { OverlayCard } from '@/components/common/overlay-card'
-import React from 'react'
+import React, { useMemo } from 'react'
 import styles from './overall-ranking.module.css'
 import { PlayerItem } from '@/components/common/team-player-item/team-player-item'
 import { TeamEnum, TeamType } from '@/types/team'
@@ -25,12 +25,16 @@ function OverallRanking({ teams }: OverallRankingProps) {
 		return 'NOXUS'
 	}
 
+	const teamsData = useMemo(() => {
+		console.log({ teams })
+		return teams ?? []
+	}, [teams])
 	return (
 		<OverlayCard title="GESAMTWERTUNG" subtitle="TEAM RANKING">
 			{/* List */}
 			<div className={styles.list}>
 				{/* Item */}
-				{teams.map((team, index) => (
+				{teamsData.map((team, index) => (
 					<PlayerItem
 						key={index}
 						rank={team.placement}

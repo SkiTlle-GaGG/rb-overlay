@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { OverlayCard } from '@/components/common/overlay-card'
 import { TeamEnum, TeamType } from '@/types/team'
 import { Challenge } from '@/types/overlay-data'
@@ -18,6 +18,10 @@ export default function ChallengesRanking({ challenges }: ChallengesRankingProps
 		if (teamId === TeamEnum.IONIA) return IoniaFrame.src
 		return NoxusFrame.src
 	}
+
+	useEffect(() => {
+		// console.log({ challengesProp: challenges })
+	}, [])
 
 	return (
 		<OverlayCard title="CHALLENGES" subtitle="Team Ranking">

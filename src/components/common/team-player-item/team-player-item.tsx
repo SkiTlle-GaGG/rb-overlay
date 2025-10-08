@@ -42,6 +42,12 @@ export function PlayerItem({
 						width={50}
 						height={50}
 						className="object-cover rounded-full h-10 w-10"
+						loading="lazy"
+						onError={(e) => {
+							const target = e.target as HTMLImageElement;
+							target.onerror = null; // prevent infinite loop
+							target.src = "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/29.png";
+						}}
 					/>
 				</div>
 

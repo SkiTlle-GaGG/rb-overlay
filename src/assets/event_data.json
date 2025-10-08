@@ -7,9 +7,25 @@
 		"data": {
 		  "challenges": [
 			{
-			  "team_id": "7bc23a43-3ffc-410a-9a7f-ded6dc72b99f",
+			  "team_id": "IONIA",
 			  "challenge": "WEEK_1",
-			  "label": "Week 1",
+			  "label": "WINS",
+			  "score": 1271,
+			  "placement": "1",
+			  "icon_url": "url"
+			},
+			{
+			  "team_id": "DEMACIA",
+			  "challenge": "WEEK_1",
+			  "label": "PORO SNACKS",
+			  "score": 1271,
+			  "placement": "1",
+			  "icon_url": "url"
+			},
+			{
+			  "team_id": "NOXUS",
+			  "challenge": "WEEK_1",
+			  "label": "WINS",
 			  "score": 1271,
 			  "placement": "1",
 			  "icon_url": "url"
@@ -17,7 +33,7 @@
 		  ],
 		  "team_players_ranking": [
 			{
-			  "team_id": "89f7341e-c5e9-4c4e-9868-a2c860be12c4",
+			  "team_id": "IONIA",
 			  "captain_riot_id": "Volsebnik#PoB",
 			  "players": [
 				{
@@ -25,26 +41,26 @@
 				  "score": 217824.38888888888,
 				  "placement": 1,
 				  "captain": true,
-				  "icon_url": "url"
+				  "icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/29.png"
 				},
 				{
 				  "riot_id": "FTW250005#RIOT",
 				  "score": 122262,
 				  "placement": 2,
 				  "captain": false,
-				  "icon_url": "url"
+				  "icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/29.png"
 				},
 				{
 				  "riot_id": "FTW250011#RIOT",
 				  "score": 0,
 				  "placement": 3,
 				  "captain": false,
-				  "icon_url": "url"
+				  "icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/29.png"
 				}
 			  ]
 			},
 			{
-			  "team_id": "7c03192c-f431-4e23-bb29-eaf9f8b69ffd",
+			  "team_id": "DEMACIA",
 			  "captain_riot_id": "Lannito#bop",
 			  "players": [
 				{
@@ -52,26 +68,26 @@
 				  "score": 281652.61947519414,
 				  "placement": 1,
 				  "captain": true,
-				  "icon_url": "url"
+				  "icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/6725.png"
 				},
 				{
 				  "riot_id": "FTW250015#RIOT",
 				  "score": 5617.5,
 				  "placement": 2,
 				  "captain": false,
-				  "icon_url": "url"
+				  "icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/6725.png"
 				},
 				{
 				  "riot_id": "G4m3rguy91#9218",
 				  "score": 418,
 				  "placement": 3,
 				  "captain": false,
-				  "icon_url": "url"
+				  "icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/6725.png"
 				}
 			  ]
 			},
 			{
-			  "team_id": "7bc23a43-3ffc-410a-9a7f-ded6dc72b99f",
+			  "team_id": "NOXUS",
 			  "captain_riot_id": "FTW250008#RIOT",
 			  "players": [
 				{
@@ -79,46 +95,46 @@
 				  "score": 565362.53125,
 				  "placement": 1,
 				  "captain": false,
-				  "icon_url": "url"
+				  "icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/29.png"
 				},
 				{
 				  "riot_id": "FTW250007#RIOT",
 				  "score": 511506.22507991863,
 				  "placement": 2,
 				  "captain": false,
-				  "icon_url": "url"
+				  "icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/29.png"
 				},
 				{
 				  "riot_id": "FTW250008#RIOT",
 				  "score": 404326.3823529412,
 				  "placement": 3,
 				  "captain": true,
-				  "icon_url": "url"
+				  "icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/29.png"
 				}
 			  ]
 			}
 		  ],
 		  "teams_ranking": [
 			{
-			  "team_id": "7bc23a43-3ffc-410a-9a7f-ded6dc72b99f",
+			  "team_id": "IONIA",
 			  "score": 9610,
 			  "placement": "1",
 			  "captain_riot_id": "FTW250008#RIOT",
-			  "icon_url": "url"
+			  "icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/29.png"
 			},
 			{
-			  "team_id": "7c03192c-f431-4e23-bb29-eaf9f8b69ffd",
+			  "team_id": "DEMACIA",
 			  "score": 4868,
 			  "placement": "2",
 			  "captain_riot_id": "Lannito#bop",
-			  "icon_url": "url"
+			  "icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/29.png"
 			},
 			{
-			  "team_id": "89f7341e-c5e9-4c4e-9868-a2c860be12c4",
+			  "team_id": "NOXUS",
 			  "score": 142,
 			  "placement": "3",
 			  "captain_riot_id": "Volsebnik#PoB",
-			  "icon_url": "url"
+			  "icon_url": "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/29.png"
 			}
 		  ]
 		}

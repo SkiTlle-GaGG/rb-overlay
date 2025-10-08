@@ -1,119 +1,63 @@
 'use client'
 
 import { ChallengesRanking, OverallRanking, TeamPlayersRanking } from '@/components/overlays'
-import { SlideIn, SlideInStatus } from '@/components/common'
 import { TeamPlayersRankingData } from '@/types/overlay-data'
 import { TeamEnum } from '@/types/team'
-import React, { useEffect, useMemo, useState } from 'react'
-import { SlideInStatusEnum } from '@/components/common/slide-in/slide-in'
-
-interface CurrentTimeData {
-    minute: number
-    second: number
-    millisecond: number
-}
-
-const MAX_MINUTE_OVERLAY_VISIBLE = 1;
-
-const FIRST_SLIDE_START_TIME = [21, 30];
-const SECOND_SLIDE_START_TIME = [FIRST_SLIDE_START_TIME[0] + MAX_MINUTE_OVERLAY_VISIBLE, FIRST_SLIDE_START_TIME[1] + MAX_MINUTE_OVERLAY_VISIBLE];
-const THIRD_SLIDE_START_TIME = [SECOND_SLIDE_START_TIME[0] + MAX_MINUTE_OVERLAY_VISIBLE, SECOND_SLIDE_START_TIME[1] + MAX_MINUTE_OVERLAY_VISIBLE];
-
+import React, { useEffect, useRef, useState } from 'react'
+import styles from './streamer-overlay-style.module.css'
 
 function ObsessOverlay() {
-    const [cardStates, setCardStates] = useState<SlideInStatus[]>(['hidden', 'hidden', 'hidden'])
-    // [minutes, seconds, milliseconds]
-    const [currentDate, setCurrentTime] = useState<Date>(new Date())
+    const [isRunning, setIsRunning] = useState<boolean>(false)
+    const [runId, setRunId] = useState<number>(0)
+    const nextStartRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+    const endRunRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-    const currentTimeData = useMemo<CurrentTimeData>(() => {
-        const minute = currentDate.getMinutes();
-        const second = currentDate.getSeconds();
-        const millisecond = currentDate.getMilliseconds();
-        // console.log({ minute, second, millisecond })
-        return { minute, second, millisecond }
-    }, [currentDate])
+    const RUN_DURATION_MS = 96_000
+    const TEN_MINUTES_MS = 1 * 60 * 1000
 
-    // Start timer
-    useEffect(() => {
-        setInterval(() => {
-            const now = new Date()
-            setCurrentTime(now)
-        }, 1000)
-    }, [])
+    function getMsUntilNextTenMinuteBoundary(now: Date): number {
+        const minutes = now.getMinutes()
+        const seconds = now.getSeconds()
+        const ms = now.getMilliseconds()
+        const minutesToBoundary = (10 - (minutes % 10)) % 10
+        let msUntil = minutesToBoundary * 60 * 1000 - seconds * 1000 - ms
+        if (msUntil < 0) msUntil += TEN_MINUTES_MS
+        return msUntil
+    }
 
-    const shouldDisplayOverlay = useMemo(() => {
-        const currentMinute = currentTimeData.minute;
-
-        const showFirstSlide = (currentMinute >= FIRST_SLIDE_START_TIME[0] && currentMinute < SECOND_SLIDE_START_TIME[0]) || (currentMinute >= FIRST_SLIDE_START_TIME[1] && currentMinute < SECOND_SLIDE_START_TIME[1]);
-        const showSecondSlide = (currentMinute >= SECOND_SLIDE_START_TIME[0] && currentMinute < THIRD_SLIDE_START_TIME[0]) || (currentMinute >= SECOND_SLIDE_START_TIME[1] && currentMinute < THIRD_SLIDE_START_TIME[1]);
-        const showThirdSlide = (currentMinute >= THIRD_SLIDE_START_TIME[0] && currentMinute < THIRD_SLIDE_START_TIME[0] + MAX_MINUTE_OVERLAY_VISIBLE) || (currentMinute >= THIRD_SLIDE_START_TIME[1] && currentMinute < THIRD_SLIDE_START_TIME[1] + MAX_MINUTE_OVERLAY_VISIBLE);
-        return { showFirstSlide, showSecondSlide, showThirdSlide };
-    }, [currentTimeData])
-
-
-    // Slide in/out animations
-    useEffect(() => {
-        // ========== CONFIGURATION ==========
-        const { showFirstSlide, showSecondSlide, showThirdSlide } = shouldDisplayOverlay;
-        console.log(...cardStates);
-
-        if (showFirstSlide) {
-            const firstSlideStatus = cardStates[0];
-
-            switch (firstSlideStatus) {
-                case SlideInStatusEnum.VISIBLE:
-                    return;
-                case SlideInStatusEnum.HIDDEN:
-                    setCardStates([SlideInStatusEnum.SLIDING_IN, SlideInStatusEnum.HIDDEN, SlideInStatusEnum.HIDDEN])
-                    break;
-                case SlideInStatusEnum.SLIDING_IN:
-                    setCardStates([SlideInStatusEnum.VISIBLE, SlideInStatusEnum.HIDDEN, SlideInStatusEnum.HIDDEN])
-                    break;
-            }
-
-        } else if (showSecondSlide) {
-
-            const firstSlideStatus = cardStates[0];
-
-            if (firstSlideStatus === SlideInStatusEnum.VISIBLE) {
-                setCardStates([SlideInStatusEnum.SLIDING_OUT, SlideInStatusEnum.HIDDEN, SlideInStatusEnum.HIDDEN])
-                setTimeout(() => {
-                    setCardStates([SlideInStatusEnum.HIDDEN, SlideInStatusEnum.HIDDEN, SlideInStatusEnum.HIDDEN])
-                }, 800)
-            }
-
-            const secondSlideStatus = cardStates[1];
-            switch (secondSlideStatus) {
-                case SlideInStatusEnum.VISIBLE:
-                    return;
-                case SlideInStatusEnum.HIDDEN:
-                    setCardStates([SlideInStatusEnum.HIDDEN, SlideInStatusEnum.SLIDING_IN, SlideInStatusEnum.HIDDEN])
-                    break;
-                case SlideInStatusEnum.SLIDING_IN:
-                    setCardStates([SlideInStatusEnum.HIDDEN, SlideInStatusEnum.VISIBLE, SlideInStatusEnum.HIDDEN])
-                    break;
-            }
-
-        } else if (showThirdSlide) {
-
-            const thirdSlideStatus = cardStates[2];
-
-            switch (thirdSlideStatus) {
-                case SlideInStatusEnum.VISIBLE:
-                    return;
-                case SlideInStatusEnum.HIDDEN:
-                    setCardStates([SlideInStatusEnum.HIDDEN, SlideInStatusEnum.HIDDEN, SlideInStatusEnum.SLIDING_IN])
-                    break;
-                case SlideInStatusEnum.SLIDING_IN:
-                    setCardStates([SlideInStatusEnum.HIDDEN, SlideInStatusEnum.HIDDEN, SlideInStatusEnum.VISIBLE])
-                    break;
-            }
-
-        } else {
-            setCardStates([SlideInStatusEnum.HIDDEN, SlideInStatusEnum.HIDDEN, SlideInStatusEnum.HIDDEN])
+    function startRun() {
+        if (endRunRef.current) {
+            clearTimeout(endRunRef.current)
+            endRunRef.current = null
         }
+        // Remount layers to restart CSS animations
+        setRunId(prev => prev + 1)
+        setIsRunning(true)
+        endRunRef.current = setTimeout(() => {
+            setIsRunning(false)
+        }, RUN_DURATION_MS)
 
-    }, [currentTimeData])
+        if (nextStartRef.current) {
+            clearTimeout(nextStartRef.current)
+            nextStartRef.current = null
+        }
+        // Schedule the next run exactly 10 minutes after this start
+        nextStartRef.current = setTimeout(() => {
+            startRun()
+        }, TEN_MINUTES_MS)
+    }
+
+    useEffect(() => {
+        const msUntil = getMsUntilNextTenMinuteBoundary(new Date())
+        nextStartRef.current = setTimeout(() => {
+            startRun()
+        }, msUntil)
+
+        return () => {
+            if (nextStartRef.current) clearTimeout(nextStartRef.current)
+            if (endRunRef.current) clearTimeout(endRunRef.current)
+        }
+    }, [])
 
     const challengesData = [
         {
@@ -146,7 +90,6 @@ function ObsessOverlay() {
         },
     ]
 
-    // Slide 2: Team Players Ranking Data
     const teamPlayers: TeamPlayersRankingData[] = [
         {
             team_id: TeamEnum.DEMACIA,
@@ -177,7 +120,6 @@ function ObsessOverlay() {
         }
     ]
 
-    // Slide 3: Overall Ranking (Teams Placement) Data
     const teamsRankingData = [
         {
             team_id: TeamEnum.NOXUS,
@@ -203,19 +145,25 @@ function ObsessOverlay() {
     ]
 
     return (
-        <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
-            <SlideIn status={cardStates[0]}>
-                <ChallengesRanking challenges={challengesData} />
-            </SlideIn>
+        <>
+            <div
+                className={`${styles.sequenceRoot} ${isRunning ? styles.running : ''}`}
+                style={{ position: 'relative', width: '100%', height: '100vh' }}
+                key={runId}
+            >
+                <div className={`${styles.overlayLayer} ${styles.overlayCard1}`}>
+                    <ChallengesRanking challenges={challengesData} />
+                </div>
 
-            <SlideIn status={cardStates[1]}>
-                <TeamPlayersRanking data={teamPlayers.find(el => el.team_id === TeamEnum.DEMACIA)!} />
-            </SlideIn>
+                <div className={`${styles.overlayLayer} ${styles.overlayCard2}`}>
+                    <TeamPlayersRanking data={teamPlayers.find(el => el.team_id === TeamEnum.DEMACIA)!} />
+                </div>
 
-            <SlideIn status={cardStates[2]}>
-                <OverallRanking teams={teamsRankingData} />
-            </SlideIn>
-        </div>
+                <div className={`${styles.overlayLayer} ${styles.overlayCard3}`}>
+                    <OverallRanking teams={teamsRankingData} />
+                </div>
+            </div>
+        </>
     )
 }
 

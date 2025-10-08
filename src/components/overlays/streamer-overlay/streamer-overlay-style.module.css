@@ -1,0 +1,65 @@
+@keyframes slide-in-from-left {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slide-out-to-left {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+.slideInFromLeft {
+    animation: slide-in-from-left 1s ease-in-out;
+}
+
+.slideOutToLeft {
+    animation: slide-out-to-left 1s ease-in-out;
+}
+
+.overlayLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform: translateX(-100%);
+}
+
+/* CSS-only sequence: each card slides in (1s), stays (30s), then slides out (1s) */
+.overlayCard1 {
+    animation:
+        slide-in-from-left 1s ease-in-out 0s forwards,
+        slide-out-to-left 1s ease-in-out 31s forwards;
+}
+
+.overlayCard2 {
+    animation:
+        slide-in-from-left 1s ease-in-out 32s forwards,
+        slide-out-to-left 1s ease-in-out 63s forwards;
+}
+
+.overlayCard3 {
+    animation:
+        slide-in-from-left 1s ease-in-out 64s forwards,
+        slide-out-to-left 1s ease-in-out 95s forwards;
+}
+
+/* Pause by default; enable running when parent has .running */
+.overlayCard1,
+.overlayCard2,
+.overlayCard3 {
+    animation-play-state: paused;
+}
+
+.running .overlayCard1,
+.running .overlayCard2,
+.running .overlayCard3 {
+    animation-play-state: running;
+}
