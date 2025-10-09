@@ -1,4 +1,4 @@
-import { ChallengesRanking } from '@/components/overlays/challenges-ranking'
+import ChallengesRanking from '@/components/overlays/challenges-ranking/ChallengeRanking'
 import { useEffect, useMemo, useState } from 'react'
 import { Challenge, EventData } from '@/types/overlay-data'
 import { withAuth } from "@/components/hoc";

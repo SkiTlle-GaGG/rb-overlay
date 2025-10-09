@@ -29,6 +29,7 @@ function OverallRanking({ teams }: OverallRankingProps) {
 		console.log({ teams })
 		return teams ?? []
 	}, [teams])
+
 	return (
 		<OverlayCard title="GESAMTWERTUNG" subtitle="TEAM RANKING">
 			{/* List */}
@@ -41,8 +42,8 @@ function OverallRanking({ teams }: OverallRankingProps) {
 						iconUrl={team.icon_url}
 						summonerName={team.captain_riot_id}
 						points={team.score}
-						frameBackground={getFrameBackground(team.team_id)}
-						label={getTeamLabel(team.team_id)}
+						frameBackground={getFrameBackground(team.team_name.toUpperCase() as TeamType)}
+						label={getTeamLabel(team.team_name.toUpperCase() as TeamType)}
 					/>
 				))}
 			</div>

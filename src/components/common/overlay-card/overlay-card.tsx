@@ -5,6 +5,8 @@ import CardBg from '@/assets/img/card_bg_new.png'
 import Image from 'next/image'
 import RbLogo from '@/assets/img/rb_logo.png'
 import styles from './overlay-card.module.css'
+import FtwLogo from '@/assets/img/ftw-logo-offwhite.png'
+import FtwLogoSvg from '@/assets/img/ftw-logo.svg'
 
 export enum TeamColor {
 	DEMACIA = 'demacia',
@@ -92,25 +94,32 @@ export default function OverlayCard({
 									{title}
 								</text>
 							</svg>
-							<svg className={styles.cardTitle} height={30} width="100%">
-								<text
-									x="2px"
-									y="18px"
-									fontFamily="FuturaforRedBull-CondBold"
-									fontSize="16"
-									fontWeight="bold"
-									fill="white"
-									stroke={"#383C42"}
-									strokeWidth="3"
-									paintOrder="stroke"
-									textAnchor="start"
-									dominantBaseline="middle"
-									letterSpacing="2"
-									style={{ textTransform: 'uppercase' }}
-								>
-									{subtitle}
-								</text>
-							</svg>
+							<div className={"flex gap-1 items-center"}>
+								<div>
+									<FtwLogoSvg width={80} height={50} />
+								</div>
+								<div className={"-mt-[2px]"}>
+									|
+								</div>
+								<svg className={styles.cardTitle} height={30} width="100%">
+									<text
+										x="2px"
+										y="17px"
+										fontFamily="FuturaforRedBull-CondBold"
+										fontSize="18"
+										fontWeight="bold"
+										fill="#FFF"
+										strokeWidth="3"
+										paintOrder="stroke"
+										textAnchor="start"
+										dominantBaseline="middle"
+										letterSpacing="2"
+										style={{ textTransform: 'uppercase' }}
+									>
+										{subtitle}
+									</text>
+								</svg>
+							</div>
 							{/* <p className={styles.cardSubtitle} style={{ color: "white", marginLeft: '2px' }}>
 								{subtitle}
 							</p> */}

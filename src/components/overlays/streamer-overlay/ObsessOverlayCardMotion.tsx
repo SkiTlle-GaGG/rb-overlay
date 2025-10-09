@@ -2,14 +2,17 @@
 
 import { AnimatePresence, motion } from "motion/react"
 import { ChallengesRanking, OverallRanking, TeamPlayersRanking } from '@/components/overlays'
-import { TeamPlayersRankingData } from '@/types/overlay-data'
+import { Challenge, EventData, TeamPlayersRankingData, TeamRanking } from '@/types/overlay-data'
 import { TeamEnum, TeamType } from '@/types/team'
 import React, { useEffect, useMemo, useState } from 'react'
 import styles from './streamer-overlay-style.module.css'
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import EventProcessor from "@/lib/event-processor"
 
 
+
+const FIRST_START_TIME_IN_MINUTES_CONST = 0;
 
 function ObsessOverlayMotion() {
 
@@ -18,66 +21,27 @@ function ObsessOverlayMotion() {
 
     const [showCardIndex, setShowCardIndex] = useState<number>(-1)
     const [currentTimeInSeconds, setCurrentTimeInSeconds] = useState<number>(0)
-    const [eventData, setEventData] = useState(null);
-    const [errorsPresent, setErrorsPresent] = useState<boolean>(false)
 
-    const [FIRST_START_TIME_IN_SECONDS, setFIRST_START_TIME_IN_SECONDS] = useState<number>(0 * 60);
+    const [FIRST_START_TIME_IN_SECONDS, setFIRST_START_TIME_IN_SECONDS] = useState<number>(FIRST_START_TIME_IN_MINUTES_CONST * 60);
     const [SECOND_START_TIME_IN_SECONDS, setSECOND_START_TIME_IN_SECONDS] = useState<number>(31 * 60);
     const [OVERLAY_DURATION_IN_SECONDS, setOVERLAY_DURATION_IN_SECONDS] = useState<number>(30);
     const [OVERLAYS_COUNT, setOVERLAYS_COUNT] = useState<number>(4);
-    
+
     const OVERLAY_VISIBLE_BETWEEN = [
         [FIRST_START_TIME_IN_SECONDS, FIRST_START_TIME_IN_SECONDS + (OVERLAY_DURATION_IN_SECONDS * OVERLAYS_COUNT)],
         [SECOND_START_TIME_IN_SECONDS, SECOND_START_TIME_IN_SECONDS + (OVERLAY_DURATION_IN_SECONDS * OVERLAYS_COUNT)],
     ]
 
-    const getCurrentWeek = (eventData: any) => {
-        const timeframes = eventData?.timeframes
+    const [challengesRanking, setChallengesRanking] = useState<Challenge[] | null>(null);
+    const [teamPlayersRanking, setTeamPlayersRanking] = useState<TeamPlayersRankingData | null>(null);
+    const [overallRanking, setOverallRanking] = useState<TeamRanking[] | null>(null);
 
-        const activeWeek = timeframes?.find((el: any) => el.active)
-        if (activeWeek) {
-            return activeWeek
-        }
 
-        return null;
+    const fetchEventData = (callback: (event: EventData) => void) => {
+        fetch('/api/event-data')
+            .then(res => res.json())
+            .then(callback)
     }
-
-    const getTeamPlayersRankingForTeam = (teamId: TeamType, currentWeekData: any): any => {
-        if (currentWeekData !== null && currentWeekData.team_players_ranking !== null) {
-            return currentWeekData.team_players_ranking.find((el: any) => el.team_id === teamId)
-        }
-        return null;
-    }
-
-    const eventDataFormated = useMemo(() => {
-        const currentWeek = getCurrentWeek(eventData)
-
-        let challenges: any = [];
-        let team_players_ranking: any = [];
-        let teams_ranking: any = [];
-
-        if (currentWeek !== null) {
-            const weekData = currentWeek.data ?? null;
-
-            if (weekData !== null) {
-                challenges = weekData.challenges ?? [];
-                team_players_ranking = getTeamPlayersRankingForTeam(TeamEnum.IONIA, weekData) ?? [];
-                teams_ranking = weekData.teams_ranking ?? [];
-            } else {
-                console.error("WEEK_DATA IS NULL", { weekData, eventData })
-            }
-        } else {
-            console.error("CURRENT_WEEK IS NULL FROM", { currentWeek, eventData })
-        }
-
-        if (challenges === null || team_players_ranking === null) {
-            setErrorsPresent(true)
-        }
-
-        console.log(challenges, team_players_ranking, teams_ranking);
-        return { challenges, team_players_ranking, teams_ranking }
-    }, [eventData])
-
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -85,33 +49,39 @@ function ObsessOverlayMotion() {
             const urlParams = new URLSearchParams(window.location.search);
             setIsDev(urlParams.has("dev") || urlParams.has("Dev"));
 
-            if(urlParams.has("start_at")) {
+            if (urlParams.has("start_at")) {
                 setFIRST_START_TIME_IN_SECONDS(Number(urlParams.get("start_at")) * 60);
             }
-            if(urlParams.has("end_at")) {
+            if (urlParams.has("end_at")) {
                 setSECOND_START_TIME_IN_SECONDS(Number(urlParams.get("end_at")) * 60);
             }
-            if(urlParams.has("duration")) {
+            if (urlParams.has("duration")) {
                 setOVERLAY_DURATION_IN_SECONDS(Number(urlParams.get("duration")));
             }
-            if(urlParams.has("overlays_count")) {
+            if (urlParams.has("overlays_count")) {
                 setOVERLAYS_COUNT(Number(urlParams.get("overlays_count")));
             }
         }
 
+        const setStates = (event: any) => {
+            const eventProcessor = new EventProcessor(event);
+            const challengesRanking = eventProcessor.getChallengesRanking();
+            const teamPlayersRanking = eventProcessor.getTeamPlayersRanking(TeamEnum.NOXUS);
+            const teamsRanking = eventProcessor.getTeamsRanking();
+            setChallengesRanking(challengesRanking);
+            setTeamPlayersRanking(teamPlayersRanking);
+            setOverallRanking(teamsRanking);
+        }
+
         // Fetching event data
-        fetch('/api/event-data')
-            .then(res => res.json())
-            .then(setEventData)
+        fetchEventData(setStates)
 
+        // Setting interval to fetch event data
         setInterval(() => {
-            // Fetching event data
-            fetch('/api/event-data')
-                .then(res => res.json())
-                .then(setEventData)
-        }, 1000 * 5)
+            fetchEventData(setStates)
+        }, 1000 * 30)
 
-        // Setting timer
+        // Setting interval to update current time
         setInterval(() => {
             const now = new Date();
             const minutes = now.getMinutes();
@@ -156,6 +126,7 @@ function ObsessOverlayMotion() {
 
 
     const INITIAL_CARD_X_COORDINATE = -500
+
     return (
         <>
 
@@ -196,7 +167,7 @@ function ObsessOverlayMotion() {
                                 exit={{ x: INITIAL_CARD_X_COORDINATE }}
                                 transition={{ duration: 1, ease: "easeInOut" }}
                             >
-                                <ChallengesRanking challenges={eventDataFormated.challenges} />
+                                <ChallengesRanking challenges={challengesRanking ?? []} />
                             </motion.div>
                         )}
                     </AnimatePresence>
@@ -211,7 +182,7 @@ function ObsessOverlayMotion() {
                                 exit={{ x: INITIAL_CARD_X_COORDINATE }}
                                 transition={{ duration: 1, ease: "easeInOut" }}
                             >
-                                <TeamPlayersRanking data={eventDataFormated.team_players_ranking} />
+                                <TeamPlayersRanking data={teamPlayersRanking ?? null} />
                             </motion.div>
                         )}
                     </AnimatePresence>
@@ -220,24 +191,22 @@ function ObsessOverlayMotion() {
                 <div className="absolute top-0 left-0">
                     <AnimatePresence>
                         {showCardIndex === 2 && (
-                        <motion.div
-                            initial={{ x: INITIAL_CARD_X_COORDINATE }}
-                            animate={{ x: 0 }}
-                            exit={{ x: INITIAL_CARD_X_COORDINATE }}
-                            transition={{ duration: 1, ease: "easeInOut" }}
-                        >
-                                <OverallRanking teams={eventDataFormated.teams_ranking} />
+                            <motion.div
+                                initial={{ x: INITIAL_CARD_X_COORDINATE }}
+                                animate={{ x: 0 }}
+                                exit={{ x: INITIAL_CARD_X_COORDINATE }}
+                                transition={{ duration: 1, ease: "easeInOut" }}
+                            >
+                                <OverallRanking teams={overallRanking ?? []} />
                             </motion.div>
                         )}
                     </AnimatePresence>
                 </div>
 
-                {
-                    showCardIndex === 3 && (
-                        <div className="absolute top-[-350px] left-0">
-                            <video src={'/rb-video-obsess.webm'} autoPlay muted />
-                        </div>
-                    )
+                {showCardIndex === 3 &&
+                    <div className="absolute left-0">
+                        <video src={'/rb-video-obsess.webm'} autoPlay muted />
+                    </div>
                 }
             </div >
         </>

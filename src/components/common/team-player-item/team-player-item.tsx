@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 
 export interface PlayerItemProps {
@@ -18,6 +18,9 @@ export function PlayerItem({
 	frameBackground,
 	label,
 }: PlayerItemProps) {
+	const [imgSrc, setImgSrc] = useState(iconUrl);
+	const fallbackSrc = "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/29.png";
+
 	return (
 		<div
 			className={'flex align-center justify-between p-2 rounded-lg text-white'}
@@ -37,16 +40,19 @@ export function PlayerItem({
 				{/* Icon */}
 				<div>
 					<Image
-						src={iconUrl}
+						src={imgSrc}
 						alt="Icon"
 						width={50}
 						height={50}
 						className="object-cover rounded-full h-10 w-10"
 						loading="lazy"
-						onError={(e) => {
-							const target = e.target as HTMLImageElement;
-							target.onerror = null; // prevent infinite loop
-							target.src = "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/29.png";
+						onLoadingComplete={(result) => {
+							if (result.naturalWidth === 0) {
+								setImgSrc(fallbackSrc);
+							}
+						}}
+						onError={() => {
+							setImgSrc(fallbackSrc);
 						}}
 					/>
 				</div>

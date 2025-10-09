@@ -8,7 +8,7 @@ import { TeamEnum, TeamType } from '@/types/team'
 import { TeamPlayersRankingData } from '@/types/overlay-data'
 
 interface TeamPlayersRankingProps {
-  data: TeamPlayersRankingData
+  data: TeamPlayersRankingData | null
 }
 
 function TeamPlayersRanking({ data }: TeamPlayersRankingProps) {
@@ -34,15 +34,18 @@ function TeamPlayersRanking({ data }: TeamPlayersRankingProps) {
   }
 
   const dataPlayers = useMemo(() => {
+    console.log({ data })
+    if (Object.keys(data).length === 0) return []
+
     return data?.players ?? []
   }, [data])
 
 
-	return (
+  return (
     <OverlayCard
-      title={getTeamName(data.team_id)}
+      title={getTeamName(data.team_name.toUpperCase() as TeamType)}
       subtitle="TOP SPIELER"
-      color={getTeamColor(data.team_id)}
+      color={getTeamColor(data.team_name.toUpperCase() as TeamType)}
     >
       {/* List */}
       <div className={'flex flex-col gap-4 font-redbull-book text-[12px]'}>
@@ -55,13 +58,13 @@ function TeamPlayersRanking({ data }: TeamPlayersRankingProps) {
               summonerName={player.riot_id}
               label={player.captain ? 'CAPTAIN' : 'SUMMONER'}
               points={player.score.toFixed(0)}
-              frameBackground={getFrameBackground(data.team_id)}
+              frameBackground={getFrameBackground(data.team_name.toUpperCase() as TeamType)}
             />
           )
         })}
       </div>
-		</OverlayCard>
-	)
+    </OverlayCard>
+  )
 }
 
 export default TeamPlayersRanking
