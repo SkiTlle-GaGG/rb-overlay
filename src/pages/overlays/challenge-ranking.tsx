@@ -1,26 +1,35 @@
 import ChallengesRanking from '@/components/overlays/challenges-ranking/ChallengeRanking'
-import { useEffect, useMemo, useState } from 'react'
-import { Challenge, EventData } from '@/types/overlay-data'
+import { Challenge } from '@/types/overlay-data'
 import { withAuth } from "@/components/hoc";
+import { motion } from 'motion/react';
+import EventProcessor from '@/lib/event-processor';
 
 
-function ChallengeRankingPage() {
+type ChallengeRankingPageProps = {
+  challengesData: Challenge[]
+}
 
-  const [eventData, setEventData] = useState<EventData | null>(null)
+function ChallengeRankingPage({ challengesData }: ChallengeRankingPageProps) {
 
-  useEffect(() => {
-    fetch('/api/event-data')
-      .then(res => res.json())
-      .then(data => setEventData(data))
-  }, [])
 
-  const challengesData = useMemo(() => {
-    return eventData?.timeframes[0].data.challenges ?? []
-  }, [eventData])
+  return (
+    <motion.div
+      initial={{ x: -100 }}
+      animate={{ x: 0 }}
+      exit={{ x: -100 }}
+      transition={{ duration: 0.5 }}
+    >
+      <ChallengesRanking challenges={challengesData} />
+    </motion.div>
+  )
+}
 
-  if (challengesData === null) return (<></>);
-
-  return <ChallengesRanking challenges={challengesData} />
+export async function getServerSideProps() {
+  const res = await fetch(`/api/event-data`);
+  const data = await res.json();
+  const eventProcessor = new EventProcessor(data);
+  const challenges = eventProcessor.getChallengesRanking();
+  return { props: { challengesData: challenges ?? [] } };
 }
 
 export default withAuth(ChallengeRankingPage);

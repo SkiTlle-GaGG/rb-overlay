@@ -29,7 +29,7 @@ function OverallRankingPage({ teamsRankingData }: OverallRankingPageProps) {
 
 
 export async function getServerSideProps() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/event-data`);
+  const res = await fetch(`/api/event-data`);
   const data = await res.json();
   const eventProcessor = new EventProcessor(data);
   const teamsRanking = eventProcessor.getTeamsRanking();
