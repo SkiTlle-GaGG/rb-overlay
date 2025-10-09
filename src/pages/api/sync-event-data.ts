@@ -18,7 +18,7 @@ interface SyncResponse {
 	error?: string
 }
 
-const RIOT_API_URL = 'https://stg.ftw.riotgames.com/assets/twitch-overlays/redbull-fractured-alliance-1.json'
+const RIOT_API_URL = process.env.RIOT_API_URL
 const LOCAL_FILE_PATH = path.join(process.cwd(), 'src', 'assets', 'event_data.json')
 
 export default async function handler(
@@ -53,14 +53,35 @@ export default async function handler(
 
 		console.log(`[${timestamp}] Starting event data sync from ${RIOT_API_URL}`)
 
-		// Fetch data from Riot Games API
-		const response = await fetch(RIOT_API_URL)
+		// Fetch data from Riot Games API with proper headers
+		const response = await fetch(RIOT_API_URL, {
+			headers: {
+				'Accept': 'application/json',
+				'Accept-Encoding': 'gzip, deflate, br',
+				'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+			},
+		})
 
 		if (!response.ok) {
 			throw new Error(`API request failed: ${response.status} ${response.statusText}`)
 		}
 
-		const eventData = await response.json()
+		// Check content type
+		const contentType = response.headers.get('content-type')
+		console.log(`[${timestamp}] Response content-type: ${contentType}`)
+
+		// Get response as text first to check encoding
+		const responseText = await response.text()
+		
+		// Try to parse as JSON
+		let eventData
+		try {
+			eventData = JSON.parse(responseText)
+		} catch (parseError) {
+			console.error(`[${timestamp}] JSON parse error:`, parseError)
+			console.error(`[${timestamp}] Response preview:`, responseText.substring(0, 200))
+			throw new Error(`Failed to parse API response as JSON: ${parseError instanceof Error ? parseError.message : 'Unknown error'}`)
+		}
 
 		// Validate that we got valid data
 		if (!eventData || typeof eventData !== 'object') {

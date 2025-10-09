@@ -10,7 +10,8 @@ import {
   Users,
   Trophy,
   Gamepad2,
-  LogOut
+  LogOut,
+  Database
 } from "lucide-react"
 import { logout } from "@/lib/auth"
 
@@ -55,6 +56,11 @@ const items = [
     title: "Analytics",
     url: "/analytics",
     icon: BarChart3,
+  },
+  {
+    title: "Data Sync",
+    url: "/data-sync",
+    icon: Database,
   },
   {
     title: "Settings",
