@@ -1,6 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { promises as fs } from 'fs'
-import path from 'path'
 import gcpStorageService from '../../lib/gcp-storage'
 
 interface SyncResponse {
@@ -19,7 +17,6 @@ interface SyncResponse {
 }
 
 const RIOT_API_URL = process.env.RIOT_API_URL
-const LOCAL_FILE_PATH = path.join(process.cwd(), 'src', 'assets', 'event_data.json')
 
 export default async function handler(
 	req: NextApiRequest,
@@ -49,6 +46,10 @@ export default async function handler(
 				timestamp,
 				error: 'Only POST requests are allowed',
 			})
+		}
+
+		if (!RIOT_API_URL) {
+			throw new Error('RIOT_API_URL environment variable is not set')
 		}
 
 		console.log(`[${timestamp}] Starting event data sync from ${RIOT_API_URL}`)
@@ -90,20 +91,18 @@ export default async function handler(
 
 		console.log(`[${timestamp}] Successfully fetched event data`)
 
-		// Write to local file
-		await fs.writeFile(
-			LOCAL_FILE_PATH,
-			JSON.stringify(eventData, null, 2),
-			'utf-8'
-		)
-
-		console.log(`[${timestamp}] Successfully wrote to local file: ${LOCAL_FILE_PATH}`)
-
 		// Upload to GCP Cloud Storage
 		let gcsResult
+		let currentFileUpdated = false
+
 		if (gcpStorageService.isConfigured()) {
+			// Upload timestamped archive
 			gcsResult = await gcpStorageService.uploadEventData(eventData)
-			console.log(`[${timestamp}] GCS upload result:`, gcsResult)
+			console.log(`[${timestamp}] GCS timestamped upload result:`, gcsResult)
+
+			// Update current file (used by event-data API)
+			currentFileUpdated = await gcpStorageService.updateCurrentEventData(eventData)
+			console.log(`[${timestamp}] Current file updated: ${currentFileUpdated}`)
 		} else {
 			console.warn(`[${timestamp}] GCP Storage not configured, skipping cloud upload`)
 			gcsResult = {
@@ -116,7 +115,7 @@ export default async function handler(
 			success: true,
 			message: 'Event data synced successfully',
 			timestamp,
-			localFile: LOCAL_FILE_PATH,
+			localFile: currentFileUpdated ? 'GCS: event_data_current.json' : 'Not updated',
 			gcsUpload: gcsResult,
 		})
 	} catch (error) {

@@ -45,41 +45,68 @@ openssl rand -hex 32
 
 ### Data Sync Pipeline
 
-The pipeline syncs event data from the Riot Games API:
-- **Source**: Configured via `RIOT_API_URL` environment variable
-- **Local Storage**: `src/assets/event_data.json`
-- **Cloud Storage**: GCP Cloud Storage with timestamped versions
+The pipeline syncs event data from the Riot Games API and stores it in GCP Cloud Storage:
+
+#### Architecture
+
+```
+Riot Games API (every 20 min) 
+    ↓
+Vercel Cron Job → /api/sync-event-data
+    ↓
+GCP Cloud Storage (Source of Truth)
+    ├── event_data_current.json (latest data - always fresh)
+    └── event_data_YYYY-MM-DD_HH-mm-ss.json (timestamped archives)
+    ↓
+/api/event-data (NO CACHE - always fetches from GCP)
+    ↓
+Your Application/Overlays (Real-time data)
+```
+
+#### How It Works
+
+1. **Automatic Sync**: Vercel cron job runs every 20 minutes
+2. **Data Storage**: 
+   - Fetches from `RIOT_API_URL`
+   - Saves to `event_data_current.json` in GCP (single source of truth)
+   - Creates timestamped archive for history
+   - Adds `lastUpdated` and `syncedAt` metadata
+3. **Data Delivery**:
+   - `/api/event-data` **always** fetches from GCP (no caching)
+   - Returns fresh data immediately after sync
+   - Falls back to local file only if GCP unavailable
+4. **No Local Writes**: Compatible with Vercel's read-only filesystem
+5. **Real-time Updates**: Data is available immediately after sync (no cache delays)
 
 #### File Access & Security
 
 Files stored in GCP Cloud Storage are accessible via:
 - **Signed URLs**: Temporary secure links (valid for 7 days) - Used by default
 - **Public URLs**: Files are uploaded with public read access as a fallback
-- Service account needs "Storage Object Creator" permission
+- Service account needs "Storage Object Creator" and "Storage Object Viewer" permissions
 
-#### Triggering Data Sync
+#### Data Sync Triggers
 
-**Option 1: Web Interface** (Recommended)
-Navigate to `/data-sync` in your dashboard and click the "Sync Event Data" button.
+**Automatic (Default)**: 
+Vercel cron job runs every 20 minutes (`*/20 * * * *`) automatically pulling fresh data.
 
-**Option 2: API Call**
-```bash
-curl -X POST https://your-domain.vercel.app/api/sync-event-data \
-  -H "Authorization: Bearer YOUR_CRON_SECRET"
-```
+**Manual Triggers**:
 
-**Option 3: Vercel Cron Job** (Optional)
-Add to `vercel.json`:
-```json
-{
-  "crons": [
-    {
-      "path": "/api/sync-event-data",
-      "schedule": "0 * * * *"
-    }
-  ]
-}
-```
+1. **Web Interface**: Navigate to `/data-sync` and click "Sync Event Data"
+2. **API Call**: 
+   ```bash
+   curl -X POST https://your-domain.vercel.app/api/sync-event-data \
+     -H "Authorization: Bearer YOUR_CRON_SECRET"
+   ```
+
+**Customizing Sync Frequency**:
+
+Edit `vercel.json` to change the schedule:
+- Every 10 minutes: `"schedule": "*/10 * * * *"`
+- Every 15 minutes: `"schedule": "*/15 * * * *"`
+- Every 20 minutes (default): `"schedule": "*/20 * * * *"`
+- Every 30 minutes: `"schedule": "*/30 * * * *"`
+- Every hour: `"schedule": "0 * * * *"`
 
 ### Troubleshooting
 
@@ -126,6 +153,24 @@ curl -X POST http://localhost:3000/api/sync-event-data \
 ```
 
 Check the console output for detailed error messages.
+
+#### Data Not Updating?
+
+If you don't see new data after a sync:
+
+1. **Check Response Headers**: The `/api/event-data` endpoint includes helpful headers
+   - `X-Data-Source: GCP` means data from Cloud Storage (expected)
+   - `X-Data-Source: LOCAL-FALLBACK` means GCP unavailable, using local file
+   - `X-Updated` shows when data was last synced
+2. **Verify Sync Success**: Check the Data Sync page to confirm new files were created
+3. **Check GCP Permissions**: Ensure service account has both "Storage Object Creator" and "Storage Object Viewer"
+4. **Check Logs**: 
+   - Vercel deployment logs for sync execution
+   - Console logs show `[event-data] Fetching latest data from GCP Cloud Storage`
+5. **Browser Cache**: Your browser may cache responses - hard refresh (Ctrl+Shift+R / Cmd+Shift+R)
+6. **Verify Data**: Check `lastUpdated` and `syncedAt` fields in the API response
+
+**No server-side caching** - data is always fetched fresh from GCP on every request!
 
 ---
 

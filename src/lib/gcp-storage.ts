@@ -109,6 +109,110 @@ class GCPStorageService {
 		}
 	}
 
+	async getLatestEventData(): Promise<any | null> {
+		if (!this.storage) {
+			console.warn('Storage client not initialized')
+			return null
+		}
+
+		try {
+			const bucket = this.storage.bucket(this.bucketName)
+			
+			// Get the latest event_data file
+			const [files] = await bucket.getFiles({
+				prefix: 'event_data_',
+			})
+
+			if (files.length === 0) {
+				console.warn('No event data files found in bucket')
+				return null
+			}
+
+			// Sort by creation time and get the latest
+			const latestFile = files.sort((a, b) => {
+				const aTime = new Date(a.metadata.timeCreated || 0).getTime()
+				const bTime = new Date(b.metadata.timeCreated || 0).getTime()
+				return bTime - aTime
+			})[0]
+
+			// Download and parse the file
+			const [contents] = await latestFile.download()
+			const data = JSON.parse(contents.toString('utf-8'))
+
+			console.log(`Retrieved latest event data from ${latestFile.name}`)
+			return data
+		} catch (error) {
+			console.error('Failed to get latest event data:', error)
+			return null
+		}
+	}
+
+	async getCurrentEventData(): Promise<any | null> {
+		if (!this.storage) {
+			console.warn('Storage client not initialized')
+			return null
+		}
+
+		try {
+			const bucket = this.storage.bucket(this.bucketName)
+			const currentFile = bucket.file('event_data_current.json')
+
+			// Check if file exists
+			const [exists] = await currentFile.exists()
+			
+			if (!exists) {
+				console.warn('Current event data file not found')
+				return null
+			}
+
+			// Download and parse the file
+			const [contents] = await currentFile.download()
+			const data = JSON.parse(contents.toString('utf-8'))
+
+			console.log('Retrieved current event data from GCS')
+			return data
+		} catch (error) {
+			console.error('Failed to get current event data:', error)
+			return null
+		}
+	}
+
+	async updateCurrentEventData(data: any): Promise<boolean> {
+		if (!this.storage) {
+			console.warn('Storage client not initialized')
+			return false
+		}
+
+		try {
+			const bucket = this.storage.bucket(this.bucketName)
+			const currentFile = bucket.file('event_data_current.json')
+
+			// Add metadata to track when data was last updated
+			const dataWithMetadata = {
+				...data,
+				lastUpdated: new Date().toISOString(),
+				syncedAt: Date.now(),
+			}
+
+			const jsonString = JSON.stringify(dataWithMetadata, null, 2)
+
+			await currentFile.save(jsonString, {
+				contentType: 'application/json',
+				metadata: {
+					cacheControl: 'no-cache, no-store, must-revalidate',
+					updated: new Date().toISOString(),
+				},
+				predefinedAcl: 'publicRead',
+			})
+
+			console.log('Updated current event data in GCS')
+			return true
+		} catch (error) {
+			console.error('Failed to update current event data:', error)
+			return false
+		}
+	}
+
 	isConfigured(): boolean {
 		return this.storage !== null
 	}
