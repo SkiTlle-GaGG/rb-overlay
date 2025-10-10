@@ -1,4 +1,5 @@
 import { Storage } from '@google-cloud/storage'
+import logger from './logger'
 
 interface UploadResult {
 	success: boolean
@@ -19,12 +20,26 @@ class GCPStorageService {
 	}
 
 	private initializeStorage() {
+		const timer = logger.startTimer('GCP Storage initialization')
+		
 		try {
 			const projectId = process.env.GCP_PROJECT_ID
 			const serviceAccountKey = process.env.GCP_SERVICE_ACCOUNT_KEY
 
+			logger.debug('Checking GCP configuration', {
+				hasProjectId: !!projectId,
+				hasServiceAccountKey: !!serviceAccountKey,
+				hasBucketName: !!this.bucketName,
+				bucketName: this.bucketName,
+			})
+
 			if (!projectId || !serviceAccountKey || !this.bucketName) {
-				console.warn('GCP credentials not properly configured')
+				logger.warn('GCP credentials not properly configured', {
+					projectId: projectId ? 'set' : 'missing',
+					serviceAccountKey: serviceAccountKey ? 'set' : 'missing',
+					bucketName: this.bucketName || 'missing',
+				})
+				timer()
 				return
 			}
 
@@ -33,8 +48,17 @@ class GCPStorageService {
 			try {
 				const decodedKey = Buffer.from(serviceAccountKey, 'base64').toString('utf-8')
 				credentials = JSON.parse(decodedKey)
+				logger.debug('Service account key decoded successfully', {
+					clientEmail: credentials.client_email,
+				})
 			} catch (parseError) {
-				console.error('Failed to parse GCP service account key:', parseError)
+				logger.error(
+					'Failed to parse GCP service account key',
+					{
+						errorType: 'JSON_PARSE_ERROR',
+					},
+					parseError instanceof Error ? parseError : new Error(String(parseError))
+				)
 				throw new Error('Invalid GCP_SERVICE_ACCOUNT_KEY format. Must be base64 encoded JSON.')
 			}
 
@@ -43,15 +67,34 @@ class GCPStorageService {
 				credentials,
 			})
 
-			console.log('GCP Storage initialized successfully')
+			logger.info('GCP Storage initialized successfully', {
+				projectId,
+				bucket: this.bucketName,
+				clientEmail: credentials.client_email,
+			})
+			timer()
 		} catch (error) {
-			console.error('Failed to initialize GCP Storage:', error)
+			logger.error(
+				'Failed to initialize GCP Storage',
+				{
+					bucketName: this.bucketName,
+					errorType: 'INITIALIZATION_FAILED',
+				},
+				error instanceof Error ? error : new Error(String(error))
+			)
 			this.storage = null
+			timer()
 		}
 	}
 
 	async uploadEventData(data: any): Promise<UploadResult> {
+		const timer = logger.startTimer('Upload event data to GCS')
+		
 		if (!this.storage) {
+			logger.warn('Upload attempted but storage client not initialized', {
+				operation: 'uploadEventData',
+			})
+			timer()
 			return {
 				success: false,
 				fileName: '',
@@ -68,6 +111,12 @@ class GCPStorageService {
 				.replace(/\..+/, '')
 			const fileName = `event_data_${timestamp}.json`
 
+			logger.info('Starting file upload to GCS', {
+				fileName,
+				bucket: this.bucketName,
+				dataSize: JSON.stringify(data).length,
+			})
+
 			const bucket = this.storage.bucket(this.bucketName)
 			const file = bucket.file(fileName)
 
@@ -79,7 +128,11 @@ class GCPStorageService {
 				contentType: 'application/json',
 			})
 
-			console.log(`File ${fileName} uploaded to ${this.bucketName}`)
+			logger.info('File uploaded successfully', {
+				fileName,
+				bucket: this.bucketName,
+				size: jsonString.length,
+			})
 
 			// Generate a signed URL (valid for 7 days) as backup
 			const [signedUrl] = await file.getSignedUrl({
@@ -87,15 +140,32 @@ class GCPStorageService {
 				expires: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
 			})
 
+			const publicUrl = `https://storage.googleapis.com/${this.bucketName}/${fileName}`
+			
+			logger.info('Upload completed successfully', {
+				fileName,
+				publicUrl,
+			})
+
+			timer()
 			return {
 				success: true,
 				fileName,
 				bucket: this.bucketName,
-				publicUrl: `https://storage.googleapis.com/${this.bucketName}/${fileName}`,
+				publicUrl,
 				signedUrl,
 			}
 		} catch (error) {
-			console.error('Failed to upload to GCP Storage:', error)
+			logger.error(
+				'Failed to upload to GCP Storage',
+				{
+					bucket: this.bucketName,
+					operation: 'uploadEventData',
+					errorType: 'UPLOAD_FAILED',
+				},
+				error instanceof Error ? error : new Error(String(error))
+			)
+			timer()
 			return {
 				success: false,
 				fileName: '',
@@ -106,12 +176,21 @@ class GCPStorageService {
 	}
 
 	async getLatestEventData(): Promise<any | null> {
+		const timer = logger.startTimer('Get latest event data from GCS')
+		
 		if (!this.storage) {
-			console.warn('Storage client not initialized')
+			logger.warn('Get latest data attempted but storage client not initialized', {
+				operation: 'getLatestEventData',
+			})
+			timer()
 			return null
 		}
 
 		try {
+			logger.debug('Fetching latest event data', {
+				bucket: this.bucketName,
+			})
+
 			const bucket = this.storage.bucket(this.bucketName)
 			
 			// Get the latest event_data file
@@ -120,9 +199,17 @@ class GCPStorageService {
 			})
 
 			if (files.length === 0) {
-				console.warn('No event data files found in bucket')
+				logger.warn('No event data files found in bucket', {
+					bucket: this.bucketName,
+					prefix: 'event_data_',
+				})
+				timer()
 				return null
 			}
+
+			logger.debug('Found event data files', {
+				count: files.length,
+			})
 
 			// Sort by creation time and get the latest
 			const latestFile = files.sort((a, b) => {
@@ -135,17 +222,36 @@ class GCPStorageService {
 			const [contents] = await latestFile.download()
 			const data = JSON.parse(contents.toString('utf-8'))
 
-			console.log(`Retrieved latest event data from ${latestFile.name}`)
+			logger.info('Retrieved latest event data successfully', {
+				fileName: latestFile.name,
+				size: contents.length,
+				created: latestFile.metadata.timeCreated,
+			})
+			timer()
 			return data
 		} catch (error) {
-			console.error('Failed to get latest event data:', error)
+			logger.error(
+				'Failed to get latest event data',
+				{
+					bucket: this.bucketName,
+					operation: 'getLatestEventData',
+					errorType: 'FETCH_FAILED',
+				},
+				error instanceof Error ? error : new Error(String(error))
+			)
+			timer()
 			return null
 		}
 	}
 
 	async getCurrentEventData(): Promise<any | null> {
+		const timer = logger.startTimer('Get current event data from GCS')
+		
 		if (!this.storage) {
-			console.warn('Storage client not initialized')
+			logger.warn('Get current data attempted but storage client not initialized', {
+				operation: 'getCurrentEventData',
+			})
+			timer()
 			return null
 		}
 
@@ -153,11 +259,20 @@ class GCPStorageService {
 			const bucket = this.storage.bucket(this.bucketName)
 			const currentFile = bucket.file('event_data_current.json')
 
+			logger.debug('Checking for current event data file', {
+				bucket: this.bucketName,
+				fileName: 'event_data_current.json',
+			})
+
 			// Check if file exists
 			const [exists] = await currentFile.exists()
 			
 			if (!exists) {
-				console.warn('Current event data file not found')
+				logger.warn('Current event data file not found', {
+					bucket: this.bucketName,
+					fileName: 'event_data_current.json',
+				})
+				timer()
 				return null
 			}
 
@@ -165,17 +280,36 @@ class GCPStorageService {
 			const [contents] = await currentFile.download()
 			const data = JSON.parse(contents.toString('utf-8'))
 
-			console.log('Retrieved current event data from GCS')
+			logger.info('Retrieved current event data successfully', {
+				size: contents.length,
+				lastUpdated: data.lastUpdated,
+			})
+			timer()
 			return data
 		} catch (error) {
-			console.error('Failed to get current event data:', error)
+			logger.error(
+				'Failed to get current event data',
+				{
+					bucket: this.bucketName,
+					fileName: 'event_data_current.json',
+					operation: 'getCurrentEventData',
+					errorType: 'FETCH_FAILED',
+				},
+				error instanceof Error ? error : new Error(String(error))
+			)
+			timer()
 			return null
 		}
 	}
 
 	async updateCurrentEventData(data: any): Promise<boolean> {
+		const timer = logger.startTimer('Update current event data in GCS')
+		
 		if (!this.storage) {
-			console.warn('Storage client not initialized')
+			logger.warn('Update current data attempted but storage client not initialized', {
+				operation: 'updateCurrentEventData',
+			})
+			timer()
 			return false
 		}
 
@@ -192,14 +326,34 @@ class GCPStorageService {
 
 			const jsonString = JSON.stringify(dataWithMetadata, null, 2)
 
+			logger.info('Updating current event data file', {
+				bucket: this.bucketName,
+				fileName: 'event_data_current.json',
+				size: jsonString.length,
+			})
+
 			await currentFile.save(jsonString, {
 				contentType: 'application/json',
 			})
 
-			console.log('Updated current event data in GCS')
+			logger.info('Updated current event data successfully', {
+				fileName: 'event_data_current.json',
+				lastUpdated: dataWithMetadata.lastUpdated,
+			})
+			timer()
 			return true
 		} catch (error) {
-			console.error('Failed to update current event data:', error)
+			logger.error(
+				'Failed to update current event data',
+				{
+					bucket: this.bucketName,
+					fileName: 'event_data_current.json',
+					operation: 'updateCurrentEventData',
+					errorType: 'UPDATE_FAILED',
+				},
+				error instanceof Error ? error : new Error(String(error))
+			)
+			timer()
 			return false
 		}
 	}

@@ -68,6 +68,7 @@ function ObsessOverlayMotion() {
             const challengesRanking = eventProcessor.getChallengesRanking();
             const teamPlayersRanking = eventProcessor.getTeamPlayersRanking(TeamEnum.NOXUS);
             const teamsRanking = eventProcessor.getTeamsRanking();
+            console.log({ challengesRanking, teamPlayersRanking, teamsRanking })
             setChallengesRanking(challengesRanking);
             setTeamPlayersRanking(teamPlayersRanking);
             setOverallRanking(teamsRanking);

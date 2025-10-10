@@ -174,8 +174,8 @@ function DataSyncPage() {
 												<strong>Cloud Storage:</strong>{' '}
 												{syncResult.gcsUpload.success ? (
 													<>
-														<Badge variant="outline" className="ml-1">
-															{syncResult.gcsUpload.fileName}
+															<Badge variant="secondary" className="ml-1">
+																<p className='text-black'>{syncResult.gcsUpload.fileName}</p>
 														</Badge>
 													</>
 												) : (

@@ -1,64 +1,58 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { EventData } from '../../types/overlay-data'
 import eventData from '../../assets/event_data.json'
-import gcpStorageService from '../../lib/gcp-storage'
+
+const RIOT_API_URL = process.env.RIOT_API_URL;
 
 export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse<EventData | { error: string }>
 ) {
 	try {
-		// Set CORS headers to allow cross-origin requests
-		res.setHeader('Access-Control-Allow-Origin', '*')
-		res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS')
-		res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
-		
-		// No caching - always return fresh data
-		res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate')
-		res.setHeader('Pragma', 'no-cache')
-		res.setHeader('Expires', '0')
 
-		// Handle preflight requests
-		if (req.method === 'OPTIONS') {
-			res.status(200).end()
-			return
+
+		// Make sure the RIOT_API_URL is defined
+		if (!RIOT_API_URL) {
+			console.error('[event-data] RIOT_API_URL is not defined in environment variables');
+			res.setHeader('X-Data-Source', 'LOCAL-FALLBACK-NO-RIOT-URL');
+			return res.status(200).json(eventData as any);
 		}
 
-		// Only allow GET requests
-		if (req.method !== 'GET') {
-			res.status(405).json({ error: 'Method not allowed' })
-			return
+		let riotData: any = null;
+		let errorFetching = false;
+
+		try {
+			const fetchRes = await fetch(RIOT_API_URL, {
+				headers: { Accept: 'application/json' }
+			});
+
+			if (!fetchRes.ok) {
+				throw new Error(`[event-data] RIOT_API_URL fetch failed: Status ${fetchRes.status}`);
+			}
+
+			riotData = await fetchRes.json();
+		} catch (error) {
+			errorFetching = true;
+			console.error('[event-data] Error fetching RIOT_API_URL data:', error);
 		}
 
-		// Always fetch fresh data from GCP Cloud Storage
-		let freshData = null
-		
-		if (gcpStorageService.isConfigured()) {
-			console.log('[event-data] Fetching latest data from GCP Cloud Storage')
-			freshData = await gcpStorageService.getCurrentEventData()
-		}
-
-		// Use GCP data if available, otherwise fall back to local file
-		if (freshData) {
-			console.log('[event-data] Serving fresh data from GCP')
-			res.setHeader('X-Data-Source', 'GCP')
-			res.setHeader('X-Updated', freshData.lastUpdated || new Date().toISOString())
-			return res.status(200).json(freshData)
+		if (riotData && !errorFetching) {
+			console.log('[event-data] Serving fresh data from RIOT_API_URL');
+			return res.status(200).json(riotData);
 		} else {
-			console.log('[event-data] GCP data unavailable, using local fallback')
-			res.setHeader('X-Data-Source', 'LOCAL-FALLBACK')
-			return res.status(200).json(eventData as any)
+			console.warn('[event-data] RIOT_API_URL unavailable, using local fallback');
+			return res.status(200).json(eventData as any);
 		}
 	} catch (error) {
-		console.error('[event-data] Error serving event data:', error)
-		
+		console.error('[event-data] Error serving event data:', error);
+
 		// Fall back to local data on error
 		if (eventData) {
-			console.log('[event-data] Error occurred, falling back to local data')
-			res.setHeader('X-Data-Source', 'LOCAL-ERROR-FALLBACK')
-			return res.status(200).json(eventData as any)
+			console.log('[event-data] Error occurred, falling back to local data');
+			res.setHeader('X-Data-Source', 'LOCAL-ERROR-FALLBACK');
+			return res.status(200).json(eventData as any);
 		}
-		
-		return res.status(500).json({ error: 'Internal server error' })
+
+		return res.status(500).json({ error: 'Internal server error' });
 	}
 }

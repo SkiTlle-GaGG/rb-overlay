@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import gcpStorageService from '../../lib/gcp-storage'
+import logger from '../../lib/logger'
 
 interface SyncResponse {
 	success: boolean
@@ -23,8 +24,15 @@ export default async function handler(
 	res: NextApiResponse<SyncResponse>
 ) {
 	const timestamp = new Date().toISOString()
+	const timer = logger.startTimer('Event data sync - total duration')
 
-	console.log("FEtching data from Riot Games API", RIOT_API_URL)
+	logger.info('Sync request received', {
+		method: req.method,
+		ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
+		userAgent: req.headers['user-agent'],
+		hasAuthHeader: !!req.headers.authorization,
+	})
+
 	try {
 		// Verify cron secret for security
 		const authHeader = req.headers.authorization
@@ -53,8 +61,6 @@ export default async function handler(
 			throw new Error('RIOT_API_URL environment variable is not set')
 		}
 
-		console.log(`[${timestamp}] Starting event data sync from ${RIOT_API_URL}`)
-
 		// Fetch data from Riot Games API with proper headers
 		const response = await fetch(RIOT_API_URL, {
 			headers: {
@@ -70,7 +76,6 @@ export default async function handler(
 
 		// Check content type
 		const contentType = response.headers.get('content-type')
-		console.log(`[${timestamp}] Response content-type: ${contentType}`)
 
 		// Get response as text first to check encoding
 		const responseText = await response.text()
@@ -80,8 +85,6 @@ export default async function handler(
 		try {
 			eventData = JSON.parse(responseText)
 		} catch (parseError) {
-			console.error(`[${timestamp}] JSON parse error:`, parseError)
-			console.error(`[${timestamp}] Response preview:`, responseText.substring(0, 200))
 			throw new Error(`Failed to parse API response as JSON: ${parseError instanceof Error ? parseError.message : 'Unknown error'}`)
 		}
 
@@ -90,8 +93,6 @@ export default async function handler(
 			throw new Error('Invalid data received from API')
 		}
 
-		console.log(`[${timestamp}] Successfully fetched event data`)
-
 		// Upload to GCP Cloud Storage
 		let gcsResult
 		let currentFileUpdated = false
@@ -99,13 +100,10 @@ export default async function handler(
 		if (gcpStorageService.isConfigured()) {
 			// Upload timestamped archive
 			gcsResult = await gcpStorageService.uploadEventData(eventData)
-			console.log(`[${timestamp}] GCS timestamped upload result:`, gcsResult)
 
-			// // Update current file (used by event-data API)
+			// Update current file (used by event-data API)
 			currentFileUpdated = await gcpStorageService.updateCurrentEventData(eventData)
-			console.log(`[${timestamp}] Current file updated: ${currentFileUpdated}`)
 		} else {
-			console.warn(`[${timestamp}] GCP Storage not configured, skipping cloud upload`)
 			gcsResult = {
 				success: false,
 				error: 'GCP Storage not configured',
@@ -120,7 +118,7 @@ export default async function handler(
 			gcsUpload: gcsResult,
 		})
 	} catch (error) {
-		console.error(`[${timestamp}] Sync error:`, error)
+		timer()
 
 		return res.status(500).json({
 			success: false,

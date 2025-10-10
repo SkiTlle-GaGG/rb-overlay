@@ -38,6 +38,7 @@ class EventProcessor {
     // 
     getChallengesRanking(): Challenge[] {
         const currentWeekData = this.getCurrentWeekData();
+        console.log({ currentWeekData })
         return currentWeekData?.challenges ?? [];
     }
 

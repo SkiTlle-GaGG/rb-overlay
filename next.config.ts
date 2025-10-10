@@ -3,7 +3,13 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["ga.gg", "*", "stg.ftw.riotgames.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+    ],
+    // domains: ["ga.gg", "*", "stg.ftw.riotgames.com", "ftw.riotgames.com"],
   },
   eslint: {
     ignoreDuringBuilds: true,
