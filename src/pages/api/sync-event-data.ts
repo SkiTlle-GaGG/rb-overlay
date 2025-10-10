@@ -24,6 +24,7 @@ export default async function handler(
 ) {
 	const timestamp = new Date().toISOString()
 
+	console.log("FEtching data from Riot Games API", RIOT_API_URL)
 	try {
 		// Verify cron secret for security
 		const authHeader = req.headers.authorization
@@ -100,7 +101,7 @@ export default async function handler(
 			gcsResult = await gcpStorageService.uploadEventData(eventData)
 			console.log(`[${timestamp}] GCS timestamped upload result:`, gcsResult)
 
-			// Update current file (used by event-data API)
+			// // Update current file (used by event-data API)
 			currentFileUpdated = await gcpStorageService.updateCurrentEventData(eventData)
 			console.log(`[${timestamp}] Current file updated: ${currentFileUpdated}`)
 		} else {

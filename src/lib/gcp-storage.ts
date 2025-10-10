@@ -77,10 +77,6 @@ class GCPStorageService {
 			// Upload to GCS with public access
 			await file.save(jsonString, {
 				contentType: 'application/json',
-				metadata: {
-					cacheControl: 'public, max-age=3600',
-				},
-				predefinedAcl: 'publicRead', // Make file publicly readable
 			})
 
 			console.log(`File ${fileName} uploaded to ${this.bucketName}`)
@@ -198,11 +194,6 @@ class GCPStorageService {
 
 			await currentFile.save(jsonString, {
 				contentType: 'application/json',
-				metadata: {
-					cacheControl: 'no-cache, no-store, must-revalidate',
-					updated: new Date().toISOString(),
-				},
-				predefinedAcl: 'publicRead',
 			})
 
 			console.log('Updated current event data in GCS')
