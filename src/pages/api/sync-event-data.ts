@@ -34,29 +34,6 @@ export default async function handler(
 	})
 
 	try {
-		// Verify cron secret for security
-		const authHeader = req.headers.authorization
-		const cronSecret = process.env.CRON_SECRET
-
-		if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
-			return res.status(401).json({
-				success: false,
-				message: 'Unauthorized',
-				timestamp,
-				error: 'Invalid or missing authorization token',
-			})
-		}
-
-		// Only allow POST requests
-		if (req.method !== 'POST') {
-			return res.status(405).json({
-				success: false,
-				message: 'Method not allowed',
-				timestamp,
-				error: 'Only POST requests are allowed',
-			})
-		}
-
 		if (!RIOT_API_URL) {
 			throw new Error('RIOT_API_URL environment variable is not set')
 		}
