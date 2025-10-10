@@ -2,11 +2,11 @@ import React from 'react'
 import StreamerOverlayCard, { STREAMER_VIDEO_SRC } from '@/components/overlays/streamer-overlay/StreamerOverlayCar'
 import { TeamEnum } from '@/types/team'
 
-function ObsessPage() {
+function KarniPage() {
 
   return (
-    <StreamerOverlayCard teamId={TeamEnum.NOXUS} videoSrc={STREAMER_VIDEO_SRC.OBSSESS} />
+    <StreamerOverlayCard teamId={TeamEnum.IONIA} videoSrc={STREAMER_VIDEO_SRC.KARNI} />
   )
 }
 
-export default ObsessPage
+export default KarniPage

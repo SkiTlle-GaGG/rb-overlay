@@ -72,7 +72,7 @@ export default function ChallengesRanking({ challenges }: ChallengesRankingProps
 						key={index}
 						className={styles.challengeStatItem}
 						style={{
-							backgroundImage: `url(${getFrameBackground(challenge.team_name)})`,
+							backgroundImage: `url(${getFrameBackground(challenge.team_name as TeamType)})`,
 						}}
 					>
 						<p className={styles.challengeStatName}>{challenge.label}</p>

@@ -28,6 +28,7 @@ function TeamPlayersRanking({ data }: TeamPlayersRankingProps) {
   }
 
   const getTeamName = (teamId: TeamType) => {
+    console.log({ getTeamName: teamId })
     if (teamId === TeamEnum.DEMACIA) return 'TEAM DEMACIA'
     if (teamId === TeamEnum.IONIA) return 'TEAM IONIA'
     return 'TEAM NOXUS'
