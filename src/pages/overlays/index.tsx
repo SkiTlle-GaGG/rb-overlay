@@ -52,6 +52,20 @@ const CARDS_DATA = [
     resolution: "1920x1080",
     lastUpdated: "2 min ago",
   },
+  {
+    title: "NOWAY OVERLAY",
+    description: "PARAMS: dev=true, start_at=0, end_at=31, duration=30, overlays_count=4",
+    href: "/overlays/streamer/noway",
+    icon: Monitor,
+    status: "Active",
+  },
+  {
+    title: "KARNI OVERLAY",
+    description: "PARAMS: dev=true, start_at=0, end_at=31, duration=30, overlays_count=4",
+    href: "/overlays/streamer/karni",
+    icon: Monitor,
+    status: "Active",
+  },
 
 
 ]
