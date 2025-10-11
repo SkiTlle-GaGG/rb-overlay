@@ -57,11 +57,13 @@ function TeamPlayersRanking({ data }: TeamPlayersRankingProps) {
               rank={player.placement}
               iconUrl={player.icon_url}
               summonerName={player.riot_id}
-              label={player.captain ? 'CAPTAIN' : 'SUMMONER'}
+              label={"BESCHWÖRER"}
               points={player.score.toFixed(0)}
-              frameBackground={getFrameBackground(data.team_name.toUpperCase() as TeamType)}
+              frameBackground={getFrameBackground(
+                data.team_name.toUpperCase() as TeamType
+              )}
             />
-          )
+          );
         })}
       </div>
     </OverlayCard>
