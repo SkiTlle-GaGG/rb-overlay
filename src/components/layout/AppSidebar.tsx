@@ -11,7 +11,8 @@ import {
   Trophy,
   Gamepad2,
   LogOut,
-  Database
+  Database,
+  Book
 } from "lucide-react"
 import { logout } from "@/lib/auth"
 
@@ -67,6 +68,11 @@ const items = [
     url: "/settings",
     icon: Settings,
   },
+  {
+    title: "Instruction",
+    url: "/overlays/instruction",
+    icon: Book,
+  }
 ]
 
 export function AppSidebar() {
