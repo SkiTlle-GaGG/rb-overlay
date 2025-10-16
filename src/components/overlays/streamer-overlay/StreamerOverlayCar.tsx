@@ -4,11 +4,12 @@ import { AnimatePresence, motion } from "motion/react"
 import { ChallengesRanking, OverallRanking, TeamPlayersRanking } from '@/components/overlays'
 import { Challenge, EventData, TeamPlayersRankingData, TeamRanking } from '@/types/overlay-data'
 import { TeamEnum, TeamType } from '@/types/team'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import styles from './streamer-overlay-style.module.css'
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import EventProcessor from "@/lib/event-processor"
+import challenges from "@/pages/challenges"
 
 const FIRST_START_TIME_IN_MINUTES_CONST = 0;
 
@@ -18,7 +19,9 @@ export enum STREAMER_VIDEO_SRC {
     KARNI = '/rb-video-karni.webm',
 }
 
-function ObsessOverlayMotion({teamId, videoSrc}: {teamId: TeamType, videoSrc: STREAMER_VIDEO_SRC}) {
+const OVERLAY_DURATION_IN_SECONDS_CONST = 30;
+
+function ObsessOverlayMotion({ teamId, videoSrc }: { teamId: TeamType, videoSrc: STREAMER_VIDEO_SRC }) {
 
     // Get url param "dev"
     const [isDev, setIsDev] = useState<boolean>(false);
@@ -28,7 +31,7 @@ function ObsessOverlayMotion({teamId, videoSrc}: {teamId: TeamType, videoSrc: ST
 
     const [FIRST_START_TIME_IN_SECONDS, setFIRST_START_TIME_IN_SECONDS] = useState<number>(FIRST_START_TIME_IN_MINUTES_CONST * 60);
     const [SECOND_START_TIME_IN_SECONDS, setSECOND_START_TIME_IN_SECONDS] = useState<number>(31 * 60);
-    const [OVERLAY_DURATION_IN_SECONDS, setOVERLAY_DURATION_IN_SECONDS] = useState<number>(30);
+    const [OVERLAY_DURATION_IN_SECONDS, setOVERLAY_DURATION_IN_SECONDS] = useState<number>(OVERLAY_DURATION_IN_SECONDS_CONST);
     const [OVERLAYS_COUNT, setOVERLAYS_COUNT] = useState<number>(4);
 
     const OVERLAY_VISIBLE_BETWEEN = [
@@ -68,14 +71,18 @@ function ObsessOverlayMotion({teamId, videoSrc}: {teamId: TeamType, videoSrc: ST
         }
 
         const setStates = (event: any) => {
+            const seconds = (new Date).getSeconds();
             const eventProcessor = new EventProcessor(event);
-            const challengesRanking = eventProcessor.getChallengesRanking();
-            const teamPlayersRanking = eventProcessor.getTeamPlayersRanking(teamId);
-            const teamsRanking = eventProcessor.getTeamsRanking();
-            console.log({ challengesRanking, teamPlayersRanking, teamsRanking })
-            setChallengesRanking(challengesRanking);
-            setTeamPlayersRanking(teamPlayersRanking);
-            setOverallRanking(teamsRanking);
+            let fetchedChallengesRanking = eventProcessor.getChallengesRanking();
+            const fetchedTeamPlayersRanking = eventProcessor.getTeamPlayersRanking(teamId);
+            let fetchedTeamsRanking = eventProcessor.getTeamsRanking();
+
+            fetchedChallengesRanking = fetchedChallengesRanking.map(challenge => ({ ...challenge, score: challenge.score + (seconds * 100) }));
+            fetchedTeamsRanking = fetchedTeamsRanking.map(team => ({ ...team, score: team.score + (seconds * 100) }));
+
+            setChallengesRanking(fetchedChallengesRanking);
+            setTeamPlayersRanking(fetchedTeamPlayersRanking);
+            setOverallRanking(fetchedTeamsRanking);
         }
 
         // Fetching event data
@@ -84,7 +91,7 @@ function ObsessOverlayMotion({teamId, videoSrc}: {teamId: TeamType, videoSrc: ST
         // Setting interval to fetch event data
         setInterval(() => {
             fetchEventData(setStates)
-        }, 1000 * 30)
+        }, 1000 * 10)
 
         // Setting interval to update current time
         setInterval(() => {
@@ -129,7 +136,6 @@ function ObsessOverlayMotion({teamId, videoSrc}: {teamId: TeamType, videoSrc: ST
         }
     }, [currentTimeInSeconds])
 
-
     const INITIAL_CARD_X_COORDINATE = -500
 
     return (
@@ -165,16 +171,7 @@ function ObsessOverlayMotion({teamId, videoSrc}: {teamId: TeamType, videoSrc: ST
 
                 <div className="absolute top-0 left-0">
                     <AnimatePresence >
-                        {showCardIndex === 0 && (
-                            <motion.div
-                                initial={{ x: INITIAL_CARD_X_COORDINATE }}
-                                animate={{ x: 0 }}
-                                exit={{ x: INITIAL_CARD_X_COORDINATE }}
-                                transition={{ duration: 1, ease: "easeInOut" }}
-                            >
-                                <ChallengesRanking challenges={challengesRanking ?? []} />
-                            </motion.div>
-                        )}
+                        <ChallengesRanking challenges={challengesRanking ?? []} displayCard={showCardIndex === 0} />
                     </AnimatePresence>
                 </div>
 

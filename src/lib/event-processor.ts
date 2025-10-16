@@ -38,7 +38,6 @@ class EventProcessor {
     // 
     getChallengesRanking(): Challenge[] {
         const currentWeekData = this.getCurrentWeekData();
-        console.log({ currentWeekData })
         return currentWeekData?.challenges ?? [];
     }
 
@@ -57,6 +56,23 @@ class EventProcessor {
         const currentWeekData = this.getCurrentWeekData();
         return currentWeekData?.teams_ranking ?? [];
     }
+
+    public static hasChallengesRankingChanged = (currentChallengesRanking: Challenge[], previousChallengesRanking: Challenge[]) => {
+        let hasChanges = false;
+
+        for(let i = 0; i < currentChallengesRanking.length; i++) {
+            const currentChallenge = currentChallengesRanking[i];
+            const previousChallenge = previousChallengesRanking[i];
+
+            if (currentChallenge.score !== previousChallenge.score) {
+                hasChanges = true;
+                break;
+            }
+        }
+
+        return hasChanges;
+    }
+    
 }
 
 export default EventProcessor;
