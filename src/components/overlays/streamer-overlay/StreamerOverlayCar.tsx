@@ -42,7 +42,7 @@ function ObsessOverlayMotion({ teamId, videoSrc }: { teamId: TeamType, videoSrc:
     const [challengesRanking, setChallengesRanking] = useState<Challenge[] | null>(null);
     const [teamPlayersRanking, setTeamPlayersRanking] = useState<TeamPlayersRankingData | null>(null);
     const [overallRanking, setOverallRanking] = useState<TeamRanking[] | null>(null);
-
+    const challengesRankingRef = useRef<Challenge[] | null>(null);
 
     const fetchEventData = (callback: (event: EventData) => void) => {
         fetch('/api/event-data')
@@ -52,7 +52,7 @@ function ObsessOverlayMotion({ teamId, videoSrc }: { teamId: TeamType, videoSrc:
 
     useEffect(() => {
         if (typeof window !== "undefined") {
-            console.log({ window })
+            // console.log({ window })
             const urlParams = new URLSearchParams(window.location.search);
             setIsDev(urlParams.has("dev") || urlParams.has("Dev"));
 
@@ -70,16 +70,28 @@ function ObsessOverlayMotion({ teamId, videoSrc }: { teamId: TeamType, videoSrc:
             }
         }
 
-        const setStates = (event: any) => {
-            const seconds = (new Date).getSeconds();
+        const setStates = (event: EventData) => {
+            const now = new Date();
+            const seconds = now.getSeconds();
+            const minutes = now.getMinutes();
+
             const eventProcessor = new EventProcessor(event);
             let fetchedChallengesRanking = eventProcessor.getChallengesRanking();
             const fetchedTeamPlayersRanking = eventProcessor.getTeamPlayersRanking(teamId);
-            let fetchedTeamsRanking = eventProcessor.getTeamsRanking();
+            const fetchedTeamsRanking = eventProcessor.getTeamsRanking();
 
-            fetchedChallengesRanking = fetchedChallengesRanking.map(challenge => ({ ...challenge, score: challenge.score + (seconds * 100) }));
-            fetchedTeamsRanking = fetchedTeamsRanking.map(team => ({ ...team, score: team.score + (seconds * 100) }));
+            fetchedChallengesRanking = fetchedChallengesRanking.map((challenge, index) => {
+                const currentChallengeStateScore = challengesRankingRef.current?.[index]?.score ?? 0;
+                // console.log({ currentChallengeStateScore, challengeScore: challenge.score })
+                return { ...challenge, score: currentChallengeStateScore + challenge.score }
+            });
 
+            // fetchedTeamsRanking = fetchedTeamsRanking.map(team => {
+            //     const currentScore = teamsRanking?.[team.id]?.score ?? 0;
+            //     return { ...team, score: currentScore + Math.floor(Math.random() * 901) + 100 }
+            // });
+
+            challengesRankingRef.current = fetchedChallengesRanking;
             setChallengesRanking(fetchedChallengesRanking);
             setTeamPlayersRanking(fetchedTeamPlayersRanking);
             setOverallRanking(fetchedTeamsRanking);
@@ -171,7 +183,7 @@ function ObsessOverlayMotion({ teamId, videoSrc }: { teamId: TeamType, videoSrc:
 
                 <div className="absolute top-0 left-0">
                     <AnimatePresence >
-                        <ChallengesRanking challenges={challengesRanking ?? []} displayCard={showCardIndex === 0} />
+                        <ChallengesRanking challenges={challengesRanking ?? []} displayCard={true} />
                     </AnimatePresence>
                 </div>
 

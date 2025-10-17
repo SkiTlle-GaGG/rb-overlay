@@ -8,6 +8,7 @@ import IoniaFrame from "@/assets/img/team/ionia/ionia_frame.png";
 import styles from "./challenges-ranking.module.css";
 import { motion, AnimatePresence } from "motion/react";
 import EventProcessor from "@/lib/event-processor";
+import CountUp from "react-countup";
 
 const INITIAL_CARD_X_COORDINATE = -500;
 const SCORE_ANIMATION_DURATION = 3000; // 2 seconds to show difference
@@ -60,6 +61,7 @@ export default function ChallengesRanking({
   const [hasChanges, setHasChanges] = useState<boolean>(false);
 
   useEffect(() => {
+    console.log({ challenges, challengesCurrentState })
     setChallengesCurrentState(prev => {
       const currentState = [...prev];
       const newChallengesState = [...challenges ?? []];
@@ -188,7 +190,12 @@ export default function ChallengesRanking({
                         }}
                         transition={{ duration: 0.3 }}
                       >
-                        {displayScore}
+                        <CountUp
+                          start={showDifference ? displayScore : displayScore - (scoreAnimation?.difference ?? 0)}
+                          end={displayScore}
+                          useEasing={true}
+                          duration={1}
+                        />
                       </motion.p>
 
                       {showDifference && (
