@@ -28,6 +28,7 @@ const ChallengeLabelsToText = (challengeLabel: string) => {
     quadraKills: "Vierfachtötungen",
     totalDamageDealtToChampions: "Schaden an Champions",
     GamesPlayed: "Spiele gespielt",
+    totalDamageTaken: "Schaden erhalten",
   };
 
   if (!Object.keys(labelToTextMap).includes(challengeLabel)) {
