@@ -80,11 +80,11 @@ function ObsessOverlayMotion({ teamId, videoSrc }: { teamId: TeamType, videoSrc:
             const fetchedTeamPlayersRanking = eventProcessor.getTeamPlayersRanking(teamId);
             const fetchedTeamsRanking = eventProcessor.getTeamsRanking();
 
-            fetchedChallengesRanking = fetchedChallengesRanking.map((challenge, index) => {
-                const currentChallengeStateScore = challengesRankingRef.current?.[index]?.score ?? 0;
-                // console.log({ currentChallengeStateScore, challengeScore: challenge.score })
-                return { ...challenge, score: currentChallengeStateScore + challenge.score }
-            });
+            // fetchedChallengesRanking = fetchedChallengesRanking.map((challenge, index) => {
+            //     const currentChallengeStateScore = challengesRankingRef.current?.[index]?.score ?? 0;
+            //     // console.log({ currentChallengeStateScore, challengeScore: challenge.score })
+            //     return { ...challenge, score: currentChallengeStateScore + challenge.score }
+            // });
 
             // fetchedTeamsRanking = fetchedTeamsRanking.map(team => {
             //     const currentScore = teamsRanking?.[team.id]?.score ?? 0;
@@ -183,7 +183,7 @@ function ObsessOverlayMotion({ teamId, videoSrc }: { teamId: TeamType, videoSrc:
 
                 <div className="absolute top-0 left-0">
                     <AnimatePresence >
-                        <ChallengesRanking challenges={challengesRanking ?? []} displayCard={true} />
+                        <ChallengesRanking challenges={challengesRanking ?? []} displayCard={showCardIndex === 0} />
                     </AnimatePresence>
                 </div>
 
