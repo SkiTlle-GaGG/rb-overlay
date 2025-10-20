@@ -12,7 +12,7 @@ import CountUp from "react-countup";
 
 const INITIAL_CARD_X_COORDINATE = -500;
 const SCORE_ANIMATION_DURATION = 3000; // 2 seconds to show difference
-const SCORE_UPDATE_DELAY = 300; // 0.5 seconds delay before showing difference
+const SCORE_UPDATE_DELAY = 1; // 0.5 seconds delay before showing difference
 
 
 const getFrameBackground = (teamId: TeamType) => {
@@ -61,7 +61,7 @@ export default function ChallengesRanking({
   const [hasChanges, setHasChanges] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log({ challenges, challengesCurrentState })
+    // console.log({ challenges, challengesCurrentState })
     setChallengesCurrentState(prev => {
       const currentState = [...prev];
       const newChallengesState = [...challenges ?? []];
@@ -183,31 +183,51 @@ export default function ChallengesRanking({
                       {ChallengeLabelsToText(challenge.label)}
                     </p>
                     <div className={styles.challengeStatPoints}>
-                      <motion.p
-                        animate={{
-                          scale: showDifference ? 1.1 : 1,
-                          color: showDifference ? "#00ff00" : "white"
-                        }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <CountUp
-                          start={showDifference ? displayScore : displayScore - (scoreAnimation?.difference ?? 0)}
-                          end={displayScore}
-                          useEasing={true}
-                          duration={1}
-                        />
-                      </motion.p>
-
                       {showDifference && (
-                        <motion.p
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          className={styles.scoreDifference}
+                        <motion.div
+                          initial={{
+                            opacity: 0,
+                            y: 10
+                          }}
+                          animate={{
+                            opacity: 1,
+                            y: -5
+                          }}
+                          exit={{
+                            opacity: 0,
+                            y: -15
+                          }}
+                          transition={{
+                            duration: 1.5,
+                            ease: "easeOut",
+                            repeat: Infinity,
+                            repeatType: "reverse"
+                          }}
+                          className={styles.scoreArrow}
                         >
-                          +{scoreAnimation.difference}
-                        </motion.p>
+                          ↑
+                        </motion.div>
                       )}
+
+                      <motion.div
+                        className={styles.scoreContainer}
+                        animate={{
+                          scale: showDifference ? 1.05 : 1,
+                          color: showDifference ? "#00ff88" : "white"
+                        }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                      >
+                        {showDifference ? (
+                          <CountUp
+                            start={displayScore}
+                            end={displayScore + (scoreAnimation?.difference ?? 0)}
+                            useEasing={true}
+                            duration={1}
+                          />
+                        ) : (
+                          displayScore
+                        )}
+                      </motion.div>
 
                     </div>
                   </div>
