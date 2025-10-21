@@ -28,7 +28,11 @@ const ChallengeLabelsToText = (challengeLabel: string) => {
     quadraKills: "Vierfachtötungen",
     totalDamageDealtToChampions: "Schaden an Champions",
     GamesPlayed: "Spiele gespielt",
-    totalDamageTaken: "Schaden erhalten",
+    Win: "Spiele gewonnen",
+    TotalDamageTaken: "Schaden erhalten",
+    KdaAbove5Win: "Gewinne mit KDA über 5",
+    MaximumDuration1200Win: "Spiele gewonnen unter 20min",
+    SnowballsHitAbove10: "Treffe 10+ Schneebälle",
   };
 
   if (!Object.keys(labelToTextMap).includes(challengeLabel)) {
