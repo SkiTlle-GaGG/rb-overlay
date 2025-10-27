@@ -33,6 +33,10 @@ const ChallengeLabelsToText = (challengeLabel: string) => {
     KdaAbove5Win: "Gewinne mit KDA über 5",
     MaximumDuration1200Win: "Spiele gewonnen unter 20min",
     SnowballsHitAbove10: "Treffe 10+ Schneebälle",
+    DeathsBelow1Win: "Siege ohne Tod",
+    TripleKills: "Dreifachtötungen",
+    TimeCCingOthers: "Crowd-Control Zeit",
+    TeamAllKpPercentMin50Win: "Team-Siege mit 50%+ KP",
   };
 
   if (!Object.keys(labelToTextMap).includes(challengeLabel)) {
