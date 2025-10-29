@@ -150,8 +150,20 @@ function StreamerOverlayCardNoway({ teamId, videoSrc }: { teamId: TeamType, vide
             for (let i = 0; i < periodStarts.length; i++) {
                 const start = periodStarts[i];
                 const end = start + (OVERLAY_DURATION_IN_SECONDS * OVERLAYS_COUNT);
+
                 if (currentTimeInSeconds >= start && currentTimeInSeconds < end) {
+                    // INSERT_YOUR_CODE
+                    // If foundIndex is 4 and overlay is not visible due to FIRST_START_TIME_IN_SECONDS, set foundIndex to -1.
                     foundIndex = Math.floor((currentTimeInSeconds - start) / OVERLAY_DURATION_IN_SECONDS);
+
+
+                    console.log({ foundIndex, start, end });
+                    if (foundIndex === 3 && start !== FIRST_START_TIME_IN_SECONDS) {
+                        console.log('foundIndex is 4 and start is not FIRST_START_TIME_IN_SECONDS, setting foundIndex to -1');
+                        foundIndex = -1;
+                        break;
+                    }
+
                     break;
                 }
             }
@@ -180,6 +192,16 @@ function StreamerOverlayCardNoway({ teamId, videoSrc }: { teamId: TeamType, vide
                                 value={FIRST_START_TIME_IN_SECONDS}
                                 onChange={e => setFIRST_START_TIME_IN_SECONDS(Number(e.target.value))}
                             />
+
+                            <label className="text-xs">Second Start (s)</label>
+
+                            <Input
+                                className="w-48"
+                                type="number"
+                                value={SECOND_START_TIME_IN_SECONDS}
+                                onChange={e => setSECOND_START_TIME_IN_SECONDS(Number(e.target.value))}
+                            />
+
                             <Button onClick={() => {
                                 navigator.clipboard.writeText(window.location.origin + window.location.pathname)
                             }}>
