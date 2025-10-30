@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import Image from 'next/image'
 
 export interface PlayerItemProps {
@@ -20,6 +20,13 @@ export function PlayerItem({
 }: PlayerItemProps) {
 	const [imgSrc, setImgSrc] = useState(iconUrl);
 	const fallbackSrc = "https://ga.gg/wp-content/uploads/ddragon/currentVersion/assets/img/profileicon/29.png";
+
+	const mappedSummonerName = useMemo(() => {
+		if (summonerName === "Karneyney#prime") {
+			return "Karni#ionia"
+		}
+		return summonerName;
+	}, [summonerName])
 
 	return (
 		<div
@@ -60,7 +67,7 @@ export function PlayerItem({
 				{/* Summoner */}
 				<div>
 					<p className="font-redbull-book text-[12px]">{label}</p>
-					<p className="font-redbull-cond-bold text-[12px]">{summonerName}</p>
+					<p className="font-redbull-cond-bold text-[12px]">{mappedSummonerName}</p>
 				</div>
 			</div>
 			<div className="text-right h-full flex flex-col justify-between">
