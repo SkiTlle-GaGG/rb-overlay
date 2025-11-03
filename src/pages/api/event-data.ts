@@ -4,13 +4,22 @@ import eventData from '../../assets/event_data.json'
 
 const RIOT_API_URL = process.env.RIOT_API_URL;
 
+const simulate500Response = () => {
+	return new Promise((resolve, reject) => {
+		setTimeout(() => {
+			resolve({
+				status: 500,
+				json: () => Promise.resolve({ error: 'Simulated 500 error' })
+			});
+		}, 1000);
+	});
+}
+
 export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse<EventData | { error: string }>
 ) {
 	try {
-
-
 		// Make sure the RIOT_API_URL is defined
 		if (!RIOT_API_URL) {
 			console.error('[event-data] RIOT_API_URL is not defined in environment variables');
@@ -26,8 +35,15 @@ export default async function handler(
 				headers: { Accept: 'application/json' }
 			});
 
+			// const fetchRes = await simulate500Response();
+
 			if (!fetchRes.ok) {
 				throw new Error(`[event-data] RIOT_API_URL fetch failed: Status ${fetchRes.status}`);
+			}
+
+			if (fetchRes.status !== 200) {
+				console.error(`[event-data] RIOT_API_URL fetch failed: Status ${fetchRes.status}`);
+				return res.status(200).json(eventData as any);
 			}
 
 			riotData = await fetchRes.json();

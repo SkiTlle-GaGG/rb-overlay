@@ -80,7 +80,7 @@ function StreamerOverlayCardNoway({ teamId, videoSrc }: { teamId: TeamType, vide
             const minutes = now.getMinutes();
 
             const eventProcessor = new EventProcessor(event);
-            let fetchedChallengesRanking = eventProcessor.getChallengesRanking();
+            const fetchedChallengesRanking = eventProcessor.getChallengesRanking();
             const fetchedTeamPlayersRanking = eventProcessor.getTeamPlayersRanking(teamId);
             const fetchedTeamsRanking = eventProcessor.getTeamsRanking();
 
@@ -157,9 +157,9 @@ function StreamerOverlayCardNoway({ teamId, videoSrc }: { teamId: TeamType, vide
                     foundIndex = Math.floor((currentTimeInSeconds - start) / OVERLAY_DURATION_IN_SECONDS);
 
 
-                    console.log({ foundIndex, start, end });
+                    // console.log({ foundIndex, start, end });
                     if (foundIndex === 3 && start !== FIRST_START_TIME_IN_SECONDS) {
-                        console.log('foundIndex is 4 and start is not FIRST_START_TIME_IN_SECONDS, setting foundIndex to -1');
+                        // console.log('foundIndex is 4 and start is not FIRST_START_TIME_IN_SECONDS, setting foundIndex to -1');
                         foundIndex = -1;
                         break;
                     }
