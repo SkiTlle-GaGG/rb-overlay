@@ -15,6 +15,18 @@ const simulate500Response = () => {
 	});
 }
 
+const triggerEventDataSync = async () => {
+	try {
+		console.warn('[event-data] Triggering event data sync');
+		await fetch('/api/sync-event-data', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' }
+		});
+	} catch (error) {
+		console.error('[event-data] Error triggering sync:', error);
+	}
+}
+
 export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse<EventData | { error: string }>
@@ -35,15 +47,10 @@ export default async function handler(
 				headers: { Accept: 'application/json' }
 			});
 
-			// const fetchRes = await simulate500Response();
-
-			if (!fetchRes.ok) {
+			if (!fetchRes.ok || fetchRes.status !== 200) {
+				// Trigger sync when we get a non-200 response
+				triggerEventDataSync();
 				throw new Error(`[event-data] RIOT_API_URL fetch failed: Status ${fetchRes.status}`);
-			}
-
-			if (fetchRes.status !== 200) {
-				console.error(`[event-data] RIOT_API_URL fetch failed: Status ${fetchRes.status}`);
-				return res.status(200).json(eventData as any);
 			}
 
 			riotData = await fetchRes.json();
@@ -56,7 +63,8 @@ export default async function handler(
 			console.log('[event-data] Serving fresh data from RIOT_API_URL');
 			return res.status(200).json(riotData);
 		} else {
-			console.warn('[event-data] RIOT_API_URL unavailable, using local fallback');
+			console.error('[event-data] RIOT_API_URL unavailable, using local fallback');
+			triggerEventDataSync();
 			return res.status(200).json(eventData as any);
 		}
 	} catch (error) {
@@ -64,7 +72,8 @@ export default async function handler(
 
 		// Fall back to local data on error
 		if (eventData) {
-			console.log('[event-data] Error occurred, falling back to local data');
+			console.error('[event-data] Error occurred, falling back to local data', error);
+			triggerEventDataSync();
 			res.setHeader('X-Data-Source', 'LOCAL-ERROR-FALLBACK');
 			return res.status(200).json(eventData as any);
 		}
