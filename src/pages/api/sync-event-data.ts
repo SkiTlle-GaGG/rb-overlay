@@ -79,7 +79,7 @@ export default async function handler(
 			gcsResult = await gcpStorageService.uploadEventData(eventData)
 
 			// Update current file (used by event-data API)
-			currentFileUpdated = await gcpStorageService.updateCurrentEventData(eventData)
+			// currentFileUpdated = await gcpStorageService.updateCurrentEventData(eventData)
 		} else {
 			gcsResult = {
 				success: false,
